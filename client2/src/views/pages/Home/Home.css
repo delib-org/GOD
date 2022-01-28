@@ -1,0 +1,69 @@
+.home__page {
+  position: absolute;
+  background: #103450;
+  height: 90vh;
+  width: 100%;
+  top: 0;
+}
+.home__header {
+  display: flex;
+  justify-content: space-between;
+  background: white;
+  height: 70px;
+}
+.home__header__add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+}
+.home__header__logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+}
+.home__header__logo img {
+  width: 66px;
+  height: 50px;
+}
+.home__header__para {
+  color: #c3c2c2;
+  font-size: 0.8em;
+  text-align: center;
+  margin-bottom: 0.5em;
+  font-family: sans-serif;
+}
+.home__main {
+  max-width: 600px;
+  margin: auto;
+}
+.home__learnMore {
+  padding: 50px;
+  text-align: center;
+}
+
+.css-1d6wzja-MuiButton-startIcon {
+  margin-right: 4px !important;
+  margin-left: -10px !important;
+}
+
+.home-title {
+  color: white;
+  font-weight: 600;
+  text-align: center;
+  margin: 3em 0 1em;
+  font-size: 1em;
+}
+
+.home-img {
+  width: 90%;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 10px);
+  border-radius: 7px;
+}
+
+.learn-more-btn {
+  text-align: center;
+}

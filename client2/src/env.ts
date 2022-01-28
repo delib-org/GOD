@@ -1,0 +1,2 @@
+
+export const CLOUDINARY_API='761631512588316'
