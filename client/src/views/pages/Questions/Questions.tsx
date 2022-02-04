@@ -33,6 +33,9 @@ const Vote: FC = () => {
   useEffect(() => {
     if (!questions.length) {
       dispatch(getQuestionsThunk());
+    } else {
+      //get new update
+      
     }
     dispatch(getUserThunkReducer());
   }, []); // eslint-disable-line react-hooks/exhaustive-deps

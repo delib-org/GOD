@@ -53,3 +53,17 @@ export function getAllQuestions(){
         })
     })
 }
+
+export function getNewQuestions(date_created:any){
+    return new Promise(function(resolve, reject){
+        axios.post('/questions/get-new', {date_created})
+        .then(({ data }) => {
+         
+          if(Array.isArray(data.result)) resolve(data.result);
+          else reject()
+        }).catch(e => {
+          console.error(e)
+          reject();
+        })
+    })
+}

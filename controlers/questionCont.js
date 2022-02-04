@@ -36,11 +36,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.getAllQuestions = exports.activateQuestion = exports.createQuestion = void 0;
+exports.getNewQuestions = exports.getAllQuestions = exports.activateQuestion = exports.createQuestion = void 0;
 var QuestionModel_1 = require("../models/db/QuestionModel");
-var ObjectId = require('mongoose').Types.ObjectId;
-var mongoose = require('mongoose');
-var Question = mongoose.model('Question', QuestionModel_1.QuestionSchema);
+var ObjectId = require("mongoose").Types.ObjectId;
+var mongoose = require("mongoose");
+var Question = mongoose.model("Question", QuestionModel_1.QuestionSchema);
 function createQuestion(req, res) {
     return __awaiter(this, void 0, void 0, function () {
         var question, response, results, _id, error_1;
@@ -87,7 +87,7 @@ function activateQuestion(req, res) {
                 case 0:
                     _b.trys.push([0, 4, , 5]);
                     _a = req.body, activate = _a.activate, questionId = _a.questionId;
-                    if (!(typeof activate === 'boolean' && typeof questionId === 'string')) return [3 /*break*/, 2];
+                    if (!(typeof activate === "boolean" && typeof questionId === "string")) return [3 /*break*/, 2];
                     return [4 /*yield*/, Question.updateOne({ _id: new ObjectId(questionId) }, { activate: activate })];
                 case 1:
                     result = _b.sent();
@@ -112,8 +112,8 @@ function getAllQuestions(req, res) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    if (!{}.hasOwnProperty.call(req, 'user'))
-                        throw new Error('No user in request');
+                    if (!{}.hasOwnProperty.call(req, "user"))
+                        throw new Error("No user in request");
                     userId = req.user.id;
                     return [4 /*yield*/, Question.find({
                             members: userId
@@ -128,6 +128,7 @@ function getAllQuestions(req, res) {
                     return [3 /*break*/, 3];
                 case 2:
                     error_3 = _a.sent();
+                    console.log("In getAllQuestions: " + error_3.message);
                     res.send({ error: error_3.message });
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];
@@ -136,3 +137,38 @@ function getAllQuestions(req, res) {
     });
 }
 exports.getAllQuestions = getAllQuestions;
+function getNewQuestions(req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        var userId, date_create, result, i, error_4;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    if (!{}.hasOwnProperty.call(req, "user"))
+                        throw new Error("No user in request");
+                    userId = req.user.id;
+                    date_create = req.body.date_create;
+                    if (!date_create)
+                        throw new Error('no date_create in request');
+                    return [4 /*yield*/, Question.find({
+                            members: userId
+                        })];
+                case 1:
+                    result = _a.sent();
+                    for (i in result) {
+                        result[i].members = [req.user.id];
+                        result[i].admins = [];
+                    }
+                    res.send({ result: result, ok: true });
+                    return [3 /*break*/, 3];
+                case 2:
+                    error_4 = _a.sent();
+                    console.log("In getNewQuestions: " + error_4.message);
+                    res.send({ error: error_4.message });
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.getNewQuestions = getNewQuestions;
