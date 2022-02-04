@@ -36,38 +36,40 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var express = require('express');
-var session = require('express-session');
-var cookieParser = require('cookie-parser');
-var jwt = require('jwt-simple');
-var mongoose = require('mongoose');
-var path = require('path');
-require('dotenv').config();
+var express = require("express");
+var session = require("express-session");
+var cookieParser = require("cookie-parser");
+var jwt = require("jwt-simple");
+var mongoose = require("mongoose");
+var path = require("path");
+require("dotenv").config();
 var app = express();
-var http = require('http').createServer(app);
-var io = require('socket.io')(http);
+var http = require("http").createServer(app);
+var io = require("socket.io")(http);
+var Ajv = require("ajv");
+var ajv = new Ajv();
 var port = process.env.PORT || 4000;
 app.use(cookieParser());
 var JWT_SECRET = process.env.JWT_SECRET;
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'client', 'build')));
+app.use(express.static(path.join(__dirname, "client", "build")));
 var userRoute_1 = require("./routes/userRoute");
 var questionRoute_1 = require("./routes/questionRoute");
-app.use('/questions', questionRoute_1["default"]);
-app.use('/user', userRoute_1["default"]);
+app.use("/questions", questionRoute_1["default"]);
+app.use("/user", userRoute_1["default"]);
 //passport settings
 var PASSPORT_SECRET = process.env.PASSPORT_SECRET;
-var passport = require('passport');
+var passport = require("passport");
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(session({ secret: PASSPORT_SECRET, resave: false, saveUninitialized: false }));
-require('./controlers/auth'); // get google authentication
-require('./controlers/db'); //connect to mongoDB
+require("./controlers/auth"); // get google authentication
+require("./controlers/db"); //connect to mongoDB
 var userModel_1 = require("./models/db/userModel");
 //pasport routes
-app.get('/auth', passport.authenticate('google', { scope: ['email', 'profile'] }));
-app.get('/google/callback', passport.authenticate('google', {
-    failureRedirect: 'http://localhost:3000/fail'
+app.get("/auth", passport.authenticate("google", { scope: ["email", "profile"] }));
+app.get("/google/callback", passport.authenticate("google", {
+    failureRedirect: "http://localhost:3000/fail"
 }), function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var user, UserModel, userDB, newUser, userData, userJWT, err_1;
     return __generator(this, function (_a) {
@@ -75,10 +77,10 @@ app.get('/google/callback', passport.authenticate('google', {
             case 0:
                 _a.trys.push([0, 4, , 5]);
                 user = req.user;
-                user.role = 'public';
+                user.role = "public";
                 user.last_entered = new Date();
                 console.log("user " + user.displayName + " logged in");
-                UserModel = mongoose.model('UserModel', userModel_1.UserSchema);
+                UserModel = mongoose.model("UserModel", userModel_1.UserSchema);
                 return [4 /*yield*/, UserModel.findOneAndUpdate({ id: user.id }, user)];
             case 1:
                 userDB = _a.sent();
@@ -92,9 +94,12 @@ app.get('/google/callback', passport.authenticate('google', {
             case 3:
                 res.user = user;
                 userJWT = jwt.encode({ id: user.id, role: user.role, displayName: user.displayName }, JWT_SECRET);
-                res.cookie('user', userJWT, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 2 });
-                res.cookie('isLogged', 'true', { maxAge: 1000 * 60 * 60 * 24 * 2 });
-                res.redirect('http://localhost:3000/questions');
+                res.cookie("user", userJWT, {
+                    httpOnly: true,
+                    maxAge: 1000 * 60 * 60 * 24 * 2
+                });
+                res.cookie("isLogged", "true", { maxAge: 1000 * 60 * 60 * 24 * 2 });
+                res.redirect("http://localhost:3000/questions");
                 return [3 /*break*/, 5];
             case 4:
                 err_1 = _a.sent();
@@ -104,35 +109,51 @@ app.get('/google/callback', passport.authenticate('google', {
         }
     });
 }); });
-app.get('/logout', function (req, res) {
+app.get("/logout", function (req, res) {
     req.logout();
     res.clearCookie("user");
     res.send({ login: false });
 });
 //socket io
-io.on('connection', function (socket) {
+io.on("connection", function (socket) {
     console.log(socket.rooms);
-    console.log('a user connected');
-    socket.on('message', function (msg) {
-        console.log('message: ' + msg.message);
-        io.emit('message', msg);
+    console.log("a user connected");
+    socket.on("message", function (msg) {
+        console.log("message: " + msg.message);
+        io.emit("message", msg);
     });
-    socket.on('disconnect', function () {
-        console.log('user disconnected');
+    socket.on("disconnect", function () {
+        console.log("user disconnected");
     });
     // socket.on('join room', roomId => {
     //     console.log('roomId', roomId)
     //     socket.join(roomId);
     // })
     // rooms
-    socket.on('join room', function (chatId) {
-        socket.join(chatId); //the client is now in that room
-        console.log('chat', chatId);
+    socket.on("join room", function (questionId) {
+        socket.join(questionId); //the client is now in that room
+        console.log("joined a room for question ", questionId);
     });
-    socket.on("chat room message", function (msgObj) {
-        msgObj = JSON.parse(msgObj);
-        console.log(msgObj);
-        io.sockets["in"](msgObj.roomId).emit('chat room message', msgObj.msg);
+    var roomSchema = {
+        questionId: "string",
+        msg: "string"
+    };
+    socket.on("notification", function (notificationObj) {
+        try {
+            var validate = ajv.compile(roomSchema);
+            var valid = validate(notificationObj);
+            if (!valid)
+                throw new Error(validate.errors);
+            notificationObj = JSON.parse(notificationObj);
+            console.log(notificationObj);
+            io.sockets["in"](notificationObj.questionId)
+                .emit("notification", notificationObj.msg);
+        }
+        catch (err) {
+            console.error(err);
+        }
     });
 });
-http.listen(port, function () { console.log('Server listen on port', port); });
+http.listen(port, function () {
+    console.log("Server listen on port", port);
+});
