@@ -14,7 +14,7 @@ export interface User {
 export const getUserThunkReducer = createAsyncThunk(
   "user/getUser",
   async () => {
-    console.log("get user");
+ 
     const userDB = await getUser();
     return userDB;
   }
@@ -38,9 +38,9 @@ export const userSlice = createSlice({
         state.loader = true;
       })
       .addCase(getUserThunkReducer.fulfilled, (state: any, action: any) => {
-        console.log(action);
+     
         const { displayName, id } = action.payload;
-        console.log(displayName, id);
+      
         state.displayName = displayName;
         state.id = id;
         state.status = "success";

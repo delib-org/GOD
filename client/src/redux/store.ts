@@ -2,13 +2,15 @@ import {ThunkAction, configureStore,Action } from '@reduxjs/toolkit';
 import newQuestionSlice from './reducers/createQuestionReducer';
 import questionsSlice from './reducers/questionsReducers';
 import userSlice from './reducers/userRducer';
+import chatSlic from './reducers/chatReducer'
 
 const store = configureStore({
   reducer: {
   
     newQuestion:newQuestionSlice,
     questions:questionsSlice,
-    user:userSlice
+    user:userSlice,
+    chats:chatSlic
   },
 })
 

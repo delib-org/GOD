@@ -41,18 +41,20 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var jwt = require('jwt-simple');
 var mongoose = require('mongoose');
-var app = express();
-app.use(cookieParser());
-var port = process.env.PORT || 4000;
 var path = require('path');
 require('dotenv').config();
+var app = express();
+var http = require('http').createServer(app);
+var io = require('socket.io')(http);
+var port = process.env.PORT || 4000;
+app.use(cookieParser());
 var JWT_SECRET = process.env.JWT_SECRET;
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'client', 'build')));
 var userRoute_1 = require("./routes/userRoute");
-app.use('/user', userRoute_1["default"]);
 var questionRoute_1 = require("./routes/questionRoute");
 app.use('/questions', questionRoute_1["default"]);
+app.use('/user', userRoute_1["default"]);
 //passport settings
 var PASSPORT_SECRET = process.env.PASSPORT_SECRET;
 var passport = require('passport');
@@ -62,6 +64,7 @@ app.use(session({ secret: PASSPORT_SECRET, resave: false, saveUninitialized: fal
 require('./controlers/auth'); // get google authentication
 require('./controlers/db'); //connect to mongoDB
 var userModel_1 = require("./models/db/userModel");
+//pasport routes
 app.get('/auth', passport.authenticate('google', { scope: ['email', 'profile'] }));
 app.get('/google/callback', passport.authenticate('google', {
     failureRedirect: 'http://localhost:3000/fail'
@@ -106,4 +109,30 @@ app.get('/logout', function (req, res) {
     res.clearCookie("user");
     res.send({ login: false });
 });
-app.listen(port, function () { console.log('Server listen on port', port); });
+//socket io
+io.on('connection', function (socket) {
+    console.log(socket.rooms);
+    console.log('a user connected');
+    socket.on('message', function (msg) {
+        console.log('message: ' + msg.message);
+        io.emit('message', msg);
+    });
+    socket.on('disconnect', function () {
+        console.log('user disconnected');
+    });
+    // socket.on('join room', roomId => {
+    //     console.log('roomId', roomId)
+    //     socket.join(roomId);
+    // })
+    // rooms
+    socket.on('join room', function (chatId) {
+        socket.join(chatId); //the client is now in that room
+        console.log('chat', chatId);
+    });
+    socket.on("chat room message", function (msgObj) {
+        msgObj = JSON.parse(msgObj);
+        console.log(msgObj);
+        io.sockets["in"](msgObj.roomId).emit('chat room message', msgObj.msg);
+    });
+});
+http.listen(port, function () { console.log('Server listen on port', port); });

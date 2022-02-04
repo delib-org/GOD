@@ -8,7 +8,9 @@ The current version is 4. The previous version code can be found here ([Delib-3]
 
 **Install**
 
-in root run ```npm i```
+Fork the rpeository, and then clone the rpositirory to your local machine
+
+then in root run ```npm i```
 
 in ```/client``` run  ```npm i```
 
@@ -27,7 +29,7 @@ CLOUDINARY_PAAS=<>
 
 ```
 
-In the client directory add a file ```env.ts``` and write the cloudanry key you got from cloudinary.com:
+In the client src directory add a file ```env.ts``` and write the cloudanry key you got from cloudinary.com:
 ```
 export const CLOUDINARY_API='cloudanry_key';
 ```
@@ -42,7 +44,12 @@ in root run ```npm run dev```
 
 in client run ```npm start```
 
-***Update your forked repository***
+**Intro**
+
+[Intro video for developers on Youtube](https://youtu.be/6PHgnHJ5smQ)
+
+**Update your forked repository**
+
 If you are using github desktop, use [this procedure](https://stackoverflow.com/questions/46110615/how-to-sync-your-forked-repo-with-original-repo-in-github-desktop#:~:text=2%20Answers&text=To%20sync%20the%20master%20of,the%20'fetch%20origin'%20button.).
 
 ----

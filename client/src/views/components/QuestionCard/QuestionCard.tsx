@@ -15,7 +15,7 @@ const VoteCard: FC<VoteCardProps> = (props: VoteCardProps) => {
   const history = useHistory();
 
   function handleRedirect(question:any) {
-    console.log(question)
+   
     history.push(`/question/${info._id}`)
   }
 
