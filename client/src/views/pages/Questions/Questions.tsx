@@ -9,7 +9,7 @@ import {
   getQuestionsThunk,
   allQuestions,
 } from "../../../redux/reducers/questionsReducers";
-import { getUserThunkReducer} from "../../../redux/reducers/userRducer";
+import { getUserThunkReducer } from "../../../redux/reducers/userRducer";
 
 //components
 import ButtonAppBar from "../../components/ButtonAppBar/ButtonAppBar";
@@ -24,7 +24,6 @@ export interface Group {
 const Vote: FC = () => {
   const dispatch = useAppDispatch();
 
-
   const [selectedTab, setSelectedTab] = useState(0);
   const questions = useAppSelector(allQuestions);
   const hendelTapTab = (event: React.SyntheticEvent, newValue: number) => {
@@ -32,12 +31,11 @@ const Vote: FC = () => {
   };
 
   useEffect(() => {
-   
-    dispatch(getQuestionsThunk());
-    dispatch(getUserThunkReducer())
-    
+    if (!questions.length) {
+      dispatch(getQuestionsThunk());
+    }
+    dispatch(getUserThunkReducer());
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
 
   return (
     <>

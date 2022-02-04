@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import {QuestionSchema} from '../../redux/reducers/createQuestionReducer';
+
 
 
 export async function activateQuestion(activate: boolean, questionId: string) {
@@ -39,7 +41,7 @@ export async function createUpdateQuestion(title: string, description: string, i
 }
 
 export function getAllQuestions(){
-    return new Promise((resolve, reject)=>{
+    return new Promise(function(resolve, reject){
         axios.post('/questions/get-all', {})
         .then(({ data }) => {
          

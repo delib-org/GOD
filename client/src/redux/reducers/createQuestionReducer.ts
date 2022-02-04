@@ -43,7 +43,8 @@ export interface QuestionSchema {
   loader: boolean,
   enableMoveTo2: boolean,
   enableMoveTo3: boolean,
-  activate: boolean
+  activate: boolean,
+  notification?:boolean
 }
 
 // Define the initial state using that type

@@ -10,6 +10,7 @@ export async function createQuestion(req: any, res: any) {
 
         //get question
         const question = req.body;
+       
 
         question.creatorId = req.user.id;
         question.members = [req.user.id]
@@ -24,6 +25,7 @@ export async function createQuestion(req: any, res: any) {
         } else {
             //create new question
             question.active = false;
+            question.date_created = new Date();
             const results = await Question.create(question);
 
 

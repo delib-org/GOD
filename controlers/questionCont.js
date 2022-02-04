@@ -60,6 +60,7 @@ function createQuestion(req, res) {
                 case 2:
                     //create new question
                     question.active = false;
+                    question.date_created = new Date();
                     return [4 /*yield*/, Question.create(question)];
                 case 3:
                     results = _a.sent();

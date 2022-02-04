@@ -22,6 +22,7 @@ exports.QuestionSchema = new Schema({
     image: Map,
     active: Boolean,
     draft: Boolean,
+    date_created:Date,
     status: {
         draft: Boolean,
         active: Boolean,
