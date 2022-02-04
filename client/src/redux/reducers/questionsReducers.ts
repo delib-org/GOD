@@ -8,14 +8,16 @@ export const getQuestionsThunk = createAsyncThunk(
     'questions/getQuestions',
     async (thunkAPI) => {
         const questions:any = await getAllQuestions();
-        const lastAdded = new Date();
+        let date_created = new Date();
         const unregisterdQustions = questions.map((question:any)=>{ 
           const newQuestion = question;
           newQuestion.notification = false;
+          console.log('date_created' in newQuestion)
+          if ('date_created' in newQuestion && date_created< newQuestion.date_created) date_created = newQuestion.date_created;
           return newQuestion;
         })
         console.log(unregisterdQustions)
-        return {questions:unregisterdQustions, lastAdded}
+        return {questions:unregisterdQustions, date_created}
     }
 )
 
@@ -24,7 +26,7 @@ interface QuestionsSchema {
     questionsLoder:boolean,
     questions:Array<QuestionSchema>,
     error:boolean | string,
-    lastAdded:Date
+    date_created:Date
 }
 
 const initialState = {
@@ -32,7 +34,7 @@ const initialState = {
     questionsLoder:false,
     questions:[],
     error:false,
-    lastAdded:new Date(1)
+    date_created:new Date(1)
   } as QuestionsSchema;
 
   export const questionsSlice = createSlice({
@@ -49,7 +51,7 @@ const initialState = {
         .addCase(getQuestionsThunk.fulfilled, (state:any, action:any)=>{
           console.log(action.payload)
           state.questions = action.payload.questions;
-          state.lastAdded = action.payload.lastAdded;
+          state.date_created = action.payload.date_created;
           state.questionsLoder = false;
         })
         .addCase(getQuestionsThunk.rejected, (state:any, action:any)=>{
