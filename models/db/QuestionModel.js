@@ -18,11 +18,11 @@ exports.QuestionSchema = new Schema({
     creatorId: String,
     admins: [userModel_1.UserSchema],
     last_entered: Date,
+    date_created: Number,
     role: String,
     image: Map,
     active: Boolean,
     draft: Boolean,
-    date_created:Date,
     status: {
         draft: Boolean,
         active: Boolean,

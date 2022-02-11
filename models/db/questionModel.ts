@@ -21,6 +21,7 @@ export const QuestionSchema = new Schema({
     creatorId:String,
     admins:[UserSchema],
     last_entered: Date,
+    date_created:Number,
     role:String,
     image:Map,
     active:Boolean, //legacy

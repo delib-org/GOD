@@ -60,7 +60,7 @@ function createQuestion(req, res) {
                 case 2:
                     //create new question
                     question.active = false;
-                    question.date_created = new Date();
+                    question.date_created = new Date().getTime();
                     return [4 /*yield*/, Question.create(question)];
                 case 3:
                     results = _a.sent();
@@ -139,7 +139,7 @@ function getAllQuestions(req, res) {
 exports.getAllQuestions = getAllQuestions;
 function getNewQuestions(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var userId, date_create, result, i, error_4;
+        var userId, date_created, result, i, error_4;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -147,11 +147,14 @@ function getNewQuestions(req, res) {
                     if (!{}.hasOwnProperty.call(req, "user"))
                         throw new Error("No user in request");
                     userId = req.user.id;
-                    date_create = req.body.date_create;
-                    if (!date_create)
-                        throw new Error('no date_create in request');
+                    date_created = req.body.date_created;
+                    console.log(date_created);
+                    if (!date_created)
+                        throw new Error("no date_created in request");
                     return [4 /*yield*/, Question.find({
-                            members: userId
+                            "date_created": {
+                                $gte: date_created
+                            }
                         })];
                 case 1:
                     result = _a.sent();

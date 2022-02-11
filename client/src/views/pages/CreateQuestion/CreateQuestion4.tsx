@@ -81,12 +81,16 @@ const CreateQuestion4: FC<createQuestionProps> = (
         </p>
         <div className="share__wrapper">
           <Button variant="outlined" startIcon={<MailOutlineIcon />}>
-            <EmailShareButton url={`${domain}/question/${questionId}`} subject={`Please join me in answering the following question: ${title}`}>
+            <EmailShareButton
+              url={`${domain}/question/${questionId}`}
+              subject={`Please join me in answering the following question: ${title}`}>
               Share using E-Mail
             </EmailShareButton>
           </Button>
           <Button variant="outlined" startIcon={<WhatsappIcon />}>
-            <WhatsappShareButton url={`${domain}/question/${questionId}`} title={`Please join me in answering the following question: ${title}`}>
+            <WhatsappShareButton
+              url={`${domain}/question/${questionId}`}
+              title={`Please join me in answering the following question: ${title}`}>
               Share using Whatsapp
             </WhatsappShareButton>
           </Button>

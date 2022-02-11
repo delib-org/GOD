@@ -1,6 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
-import { getAllQuestions ,getNewQuestions} from "../../controlers/questions/questions";
+import {
+  getAllQuestions,
+  getNewQuestions,
+} from "../../controlers/questions/questions";
 
 import { QuestionSchema } from "./createQuestionReducer";
 
@@ -16,38 +19,38 @@ export const getNewQuestionsThunk = createAsyncThunk(
   "questions/getNewQuestions",
   async (thunkAPI) => {
     const date_created = (state: RootState) => state.questions.date_created;
-    const question  = await getNewQuestions(date_created)
+    const question = await getNewQuestions(date_created);
   }
 );
 
-function formatQuestions(questions:Array<QuestionSchema>){
-  let date_created = new Date();
+function formatQuestions(questions: Array<QuestionSchema>) {
+  let date_created:number = new Date().getTime();
   const unregisterdQustions = questions.map((question: any) => {
     const newQuestion = question;
     newQuestion.notification = false;
-    console.log("date_created" in newQuestion);
-    if (
-      "date_created" in newQuestion &&
-      date_created < newQuestion.date_created
-    )
+
+    if ( "date_created" in newQuestion && date_created < newQuestion.date_created ) {
       date_created = newQuestion.date_created;
+    }
     return newQuestion;
   });
-  return {questions:unregisterdQustions, date_created};
+  date_created = new Date(date_created).getTime();
+  //date_created returned the newest createsd question
+  return { questions: unregisterdQustions, date_created };
 }
 
 interface QuestionsSchema {
   questionsLoder: boolean;
   questions: Array<QuestionSchema>;
   error: boolean | string;
-  date_created: Date;
+  date_created: number;
 }
 
 const initialState = {
   questionsLoder: false,
   questions: [],
   error: false,
-  date_created: new Date(1),
+  date_created: new Date(1).getTime(),
 } as QuestionsSchema;
 
 export const questionsSlice = createSlice({
@@ -73,5 +76,6 @@ export const questionsSlice = createSlice({
 });
 
 export const allQuestions = (state: RootState) => state.questions.questions;
+export const newestQuestionTime = (state:RootState) => state.questions.date_created;
 
 export default questionsSlice.reducer;

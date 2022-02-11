@@ -25,7 +25,7 @@ export async function createQuestion(req: any, res: any) {
     } else {
       //create new question
       question.active = false;
-      question.date_created = new Date();
+      question.date_created = new Date().getTime();
       const results = await Question.create(question);
 
       const { _id } = results;
@@ -80,16 +80,19 @@ export async function getAllQuestions(req: any, res: any): Promise<void> {
 
 export async function getNewQuestions(req: any, res: any): Promise<void> {
   try {
-    if (!{}.hasOwnProperty.call(req, "user"))
-      throw new Error("No user in request");
+    if (!{}.hasOwnProperty.call(req, "user")) throw new Error("No user in request");
     const userId = req.user.id;
-    const date_create = req.body.date_create;
-    if (!date_create) throw new Error('no date_create in request');
+    const {date_created} = req.body;
+    console.log(date_created)
+    
+    if (!date_created) throw new Error("no date_created in request");
 
     //find a way to find dates greate than the date_create
     //https://www.statology.org/mongodb-query-date-range/
     const result = await Question.find({
-      members: userId,
+      "date_created":{
+        $gte: date_created
+      }
     });
 
     for (let i in result) {

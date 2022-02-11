@@ -1,4 +1,5 @@
 import React, { FC, useState, useEffect } from "react";
+import axios from 'axios';
 import { Tabs, Tab } from "@mui/material";
 import VoteCard from "../../components/QuestionCard/QuestionCard";
 import Buttons from "../../components/Header/Header";
@@ -8,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import {
   getQuestionsThunk,
   allQuestions,
+  newestQuestionTime
 } from "../../../redux/reducers/questionsReducers";
 import { getUserThunkReducer } from "../../../redux/reducers/userRducer";
 
@@ -26,6 +28,7 @@ const Vote: FC = () => {
 
   const [selectedTab, setSelectedTab] = useState(0);
   const questions = useAppSelector(allQuestions);
+  const date_created = useAppSelector(newestQuestionTime);
   const hendelTapTab = (event: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
   };
@@ -38,6 +41,12 @@ const Vote: FC = () => {
       
     }
     dispatch(getUserThunkReducer());
+
+    //testing
+    axios.post('/questions/get-new',{user:103057690092925211364, date_created})
+    .then(({data})=>{
+      console.log(data.result)
+    })
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
