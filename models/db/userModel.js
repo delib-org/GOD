@@ -12,13 +12,7 @@ exports.UserSchema = new Schema({
     language: String,
     locale: String,
     email: String,
-    picture: String,
-    last_entered: Date,
-    entitiesParticipation: {
-        entityId: String,
-        status: String,
-        notificatipons: Array
-    }
+    picture: String
 });
 // const UserModel = mongoose.model('UserModel',UserSchema)
 // export default UserModel;

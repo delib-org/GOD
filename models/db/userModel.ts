@@ -12,13 +12,14 @@ export const UserSchema = new Schema({
   locale: String,
   email: String,
   picture: String,
-  last_entered: Date,
-  entitiesParticipation: {
-    entityId: String,
-    status: String,
+//   last_entered: Date,[
+//   {
+//     entityId: String,
+//     status: String,
     
-    notificatipons: Array, //which elements to follow  //[2hours:true]
-  },
+//     notifications: Array, //which elements to follow  //[2hours:true]
+//   },
+// ]
 });
 
 // const UserModel = mongoose.model('UserModel',UserSchema)
