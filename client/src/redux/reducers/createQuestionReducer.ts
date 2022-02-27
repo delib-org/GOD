@@ -1,12 +1,41 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
-import type { RootState } from '../store';
-import { uploadFile } from '../../controlers/assets';
-import { activateQuestion } from '../../controlers/questions/questions';
-import { Image } from '../../model/image'
+import type { RootState } from 'redux/store';
+import { uploadFile } from 'utils/uploadFile';
+import { Image } from 'utils/image'
+import axios from "axios";
 
 export interface ActiveQuestionObject{
   isActive:boolean;
   questionId:string;
+}
+
+export async function activateQuestion(activate: boolean, questionId: string) {
+  return new Promise((resolve, reject) => {
+    try {
+      axios.post('/questions/activate', {activate, questionId}).then(({data}) => {
+        if (data.ok) {
+          resolve(activate);
+        } else {
+          reject(false);
+        }
+      })
+    } catch (e) {
+      console.error(e);
+      reject(false);
+    }
+  })
+}
+
+export async function createUpdateQuestion(title: string, description: string, image: any, questionId?: string): Promise<any> {
+  try {
+    const {data} = await axios.post('/questions/create', {title, description, image, questionId})
+
+    if (data) return data.questionId;
+    else return undefined;
+  } catch (error) {
+    console.error(error);
+    return undefined;
+  }
 }
 
 //thunk for upload image

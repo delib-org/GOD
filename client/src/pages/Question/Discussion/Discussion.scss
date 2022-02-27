@@ -1,0 +1,48 @@
+@import 'style/vars';
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .messages {
+    flex-grow: 2;
+
+    .message {
+      border-bottom: solid 1px $light_gray;
+      padding: 20px;
+
+      .creator {
+        color: $mid_gray;
+        font-size: 0.725em;
+      }
+    }
+  }
+
+  .chat-input {
+    //width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 10px 10px;
+    height: 40px;
+
+    input[type=text] {
+      width: unset;
+      flex-grow: 2;
+      border-radius: 10px;
+      height: 32px;
+      border: solid 1px $light_gray;
+      padding: 0 10px;
+    }
+
+    button[type=submit] {
+      margin-left: 10px;
+      border: none;
+      background-color: $light_blue;
+      color: white;
+      border-radius: 8px;
+      width: 34px;
+      height: 34px;
+    }
+  }
+}

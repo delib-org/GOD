@@ -1,40 +1,40 @@
-
-
 // colors
-$primary_color: #103450;;
+$primary_color: #103450;
+;
 $primary_text: white;
-$accent:#39B6FA;
-$main:white;
-$main_header:rgba(0, 0, 0, 0.78);
-$main_subHeader:rgba(0, 0, 0, 0.72);
-$main_text:rgba(0, 0, 0, 0.575);
-$accent_text:white;
-$error:red;
+$accent: #39B6FA;
+$main: white;
+$main_header: rgba(0, 0, 0, 0.78);
+$main_subHeader: rgba(0, 0, 0, 0.72);
+$main_text: rgba(0, 0, 0, 1);
+$accent_text: white;
+$error: red;
 $warning: #FA3E3E;
 $success: #0ccf05;
 
 //sizes
-$max_wrapper:600px;
-$reg_padding:20px;
-$border_radius:10px;
+$max_wrapper: 600px;
+$reg_padding: 20px;
+$border_radius: 10px;
 
-@import '../views/pages/About/About.scss';
-@import '../views/components/ButtonAppBar/ButtonAppBar.scss';
-@import '../views/pages/Questions/Questions.scss';
-@import '../views//pages/Login/Login.scss';
+@import '../pages/About/About.scss';
+@import '../components/ButtonAppBar/ButtonAppBar.scss';
+//@import '../pages/Questions/Questions.scss';
+@import '../pages/Login/Login.scss';
 
 body,
 html {
   color: $main_text;
   font-size: 14px;
   font-family: 'Open Sans', sans-serif;
+  height: 100%;
 }
 
 @media only screen and (max-width: 550px) {
 
   body,
   html {
-    font-size: 18px;
+    //font-size: 18px;
   }
 }
 
@@ -48,12 +48,13 @@ h1 {
   color: $main_header;
   font-size: 1.4rem;
 }
+
 @media only screen and (max-width: 550px) {
 
- h1{
+  h1 {
     font-size: 1.3rem;
   }
-  h2{
+  h2 {
     font-size: 1.15rem;
   }
 }
@@ -63,7 +64,32 @@ h2 {
   font-weight: 600;
 }
 
+#root, .page {
+  height: 100%;
+}
 
+.page {
+  display: flex;
+  flex-direction: column;
+}
+
+.center-aligned-row {
+  display: flex;
+  align-items: center;
+}
+
+.loader, .api-error {
+  width: 100%;
+  //text-align: center;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.api-error {
+  color: red;
+}
 
 .question {
   font-style: italic;
@@ -203,17 +229,17 @@ h2 {
   user-select: none;
   color: $accent;
 
-  &__wrapper{
-    width:100%;
-    height:250px;
-    position:relative;
+  &__wrapper {
+    width: 100%;
+    height: 250px;
+    position: relative;
 
-    img{
+    img {
       width: 100%;
     }
   }
 
-  &__loader{
+  &__loader {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -221,16 +247,17 @@ h2 {
   }
 }
 
-.share{
-  &__wrapper{
-    margin-top:45px;
+.share {
+  &__wrapper {
+    margin-top: 45px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-   gap:20px;
+    gap: 20px;
   }
-  &__preview{
+
+  &__preview {
     padding: 20px;
     display: flex;
     flex-direction: row;
@@ -241,22 +268,25 @@ h2 {
     width: 100%;
     gap: 10px;
 
-    h2{
-      font-size:.9rem;
+    h2 {
+      font-size: .9rem;
     }
-    p{
+
+    p {
       font-size: .7rem;
     }
   }
 }
 
-.charCount{
-  font-size:.8rem;
+.charCount {
+  font-size: .8rem;
   color: $success;
-  &--ok{
-    color:$success;
+
+  &--ok {
+    color: $success;
   }
-  &--min, &--max{
+
+  &--min, &--max {
     color: $error;
   }
 }

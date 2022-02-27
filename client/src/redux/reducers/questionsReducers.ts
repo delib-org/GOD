@@ -1,51 +1,40 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import type { RootState } from '../store';
-import { getAllQuestions } from '../../controlers/questions/questions';
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
+import type {RootState} from '../store';
+import axios from "axios";
+import _ from 'lodash'
+import {QuestionSchema} from "./createQuestionReducer";
+
+function getAllQuestions(){
+    return new Promise((resolve, reject)=>{
+        axios.post('/questions/get-all', {})
+            .then(({ data }) => {
+                if(Array.isArray(data.result)) resolve(data.result);
+                else reject()
+            }).catch(e => {
+            console.error(e)
+            reject();
+        })
+    })
+}
 
 export const getQuestionsThunk = createAsyncThunk(
     'questions/getQuestions',
-    async (thunkAPI) => {
-        const questions = await getAllQuestions();
-        return questions
-    }
+    async (thunkAPI) => await getAllQuestions()
 )
 
-interface QuestionsSchema {
-     
-    questionsLoder:boolean,
-    questions:[],
-    error:boolean | string
-}
-
-const initialState = {
-   
-    questionsLoder:false,
-    questions:[],
-    error:false
-  } as QuestionsSchema;
-
-  export const questionsSlice = createSlice({
+export const questionsSlice = createSlice({
     name: 'questions',
-    initialState,
-    reducers: {
-
-    },
+    initialState: [],
+    reducers: {},
     extraReducers: builder => {
-      builder
-        .addCase(getQuestionsThunk.pending, (state:any, action:any)=>{
-          state.questionsLoder = true;
-        })
-        .addCase(getQuestionsThunk.fulfilled, (state:any, action:any)=>{
-          state.questions = action.payload;
-          state.questionsLoder = false;
-        })
-        .addCase(getQuestionsThunk.rejected, (state:any, action:any)=>{
-          state.questionsLoder = false;
-          state.error = action.payload;
-        })
+        builder
+            .addCase(getQuestionsThunk.fulfilled, (state: any, action: any) => {
+                return action.payload
+            })
     }
-  })
+})
 
-  export const allQuestions = (state: RootState) => state.questions.questions;
+export const allQuestions = (state: RootState) => state.questions
+export const questionById = (qid: string) => (state: RootState) => (_.find(state.questions, {_id: qid}) || {}) as QuestionSchema
 
-  export default questionsSlice.reducer
+export default questionsSlice.reducer
