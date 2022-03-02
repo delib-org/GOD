@@ -8,13 +8,13 @@ The current version is 4. The previous version code can be found here ([Delib-3]
 
 **Install**
 
-Fork the rpeository, and then clone the rpositirory to your local machine
+Fork the repository, and then clone the repository to your local machine
 
 then in root run ```npm i```
 
 in ```/client``` run  ```npm i```
 
-In the root directory add ```.env``` file.
+In the server directory add ```.env``` file.
 
 use the following configuration:
 ```
@@ -34,13 +34,13 @@ In the client src directory add a file ```env.ts``` and write the cloudanry key 
 export const CLOUDINARY_API='cloudanry_key';
 ```
 
+Install [Docker](https://docs.docker.com/compose/install/)
+
 **Run**
 
 Run local mongodb local server
 
-in root run ```npm run tsc```
-
-in root run ```npm run dev```
+in root run ```docker-compose up```
 
 in client run ```npm start```
 
