@@ -1,5 +1,5 @@
-import { MessageModel } from "../models/db/DiscussionModel";
-import  UserModel  from "../models/db/UserModel";
+import { MessageModel } from "../models/DiscussionModel";
+import  UserModel  from "../models/UserModel";
 
 const mongoose = require("mongoose");
 

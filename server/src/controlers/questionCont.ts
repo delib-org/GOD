@@ -1,6 +1,6 @@
-import Question from '../models/db/QuestionModel';
-import User from '../models/db/UserModel';
-import Solution from '../models/db/SuggestionSchema';
+import Question from '../models/QuestionModel';
+import User from '../models/UserModel';
+import Solution from '../models/SuggestionModel';
 
 var ObjectId = require('mongoose').Types.ObjectId;
 

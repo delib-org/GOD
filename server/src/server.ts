@@ -10,7 +10,7 @@ const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const port: number | string = process.env.PORT || 4000;
 
-import UserModel from './models/db/UserModel'
+import UserModel from './models/UserModel'
 
 import userRoutes from "./routes/userRoute";
 import questionRoutes from "./routes/questionRoute";
