@@ -1,7 +1,8 @@
 import React from "react";
 import "./Vote.scss";
 import { map } from "lodash";
-import SolutionCard from "components/SolutionCard";
+
+import VoteBar from "./VoteBar";
 
 export interface QuestionInfoProps {
   question: any;
@@ -9,16 +10,12 @@ export interface QuestionInfoProps {
 
 function Vote(props: QuestionInfoProps) {
   const { question } = props;
+  console.log(question.solutions);
   try {
     return (
-      <div className="vote-tab">
+      <div className="votePanel">
         {map(question.solutions, (solution, i: number) => (
-          <SolutionCard
-            key={`solution-${i}`}
-            solution={solution}
-            number={i + 1}
-            questionId={question.id}
-          />
+          <VoteBar key={`solution-${i}`} solution={solution} maxVotes={12} />
         ))}
       </div>
     );

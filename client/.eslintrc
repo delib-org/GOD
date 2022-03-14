@@ -38,6 +38,7 @@
     "react/jsx-closing-bracket-location":"off",
     "block-spacing":"off",
     "space-before-blocks":"off",
-    "@typescript-eslint/brace-style":"off"
+    "@typescript-eslint/brace-style":"off",
+    "react/react-in-jsx-scope":"off"
   }
 }
