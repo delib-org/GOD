@@ -44,6 +44,9 @@
     "@typescript-eslint/semi": "off",
     "@typescript-eslint/no-unused-vars": "warn",
     "spaced-comment": "off",
-    "react/react-in-jsx-scope":"off"
+    "react/react-in-jsx-scope":"off",
+    "react/jsx-indent":"off",
+    "no-trailing-spaces":"off",
+    "no-multiple-empty-lines":"off"
   }
 }

@@ -1,53 +1,64 @@
 .votePanel {
   display: flex;
-  justify-content: space-between;
   width: 100%;
-  height: 100%;
+  height: 95%;
+  justify-content: space-evenly;
   margin: auto;
   max-width: 75ch;
   align-items: flex-end;
   .voteBar {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto 100px;
     flex-direction: column;
     align-items: center;
     height: 100%;
-    justify-content: flex-end;
 
-    &__i {
-      border-radius: 100px;
-      width: 20px;
-      height: 20px;
-      border: 1px solid black;
+    justify-content: flex-end;
+    &__top {
+      height: 100%;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      justify-content: flex-end;
       align-items: center;
-      margin-bottom: 10px;
-      &:hover{
+      &__i {
+        border-radius: 100px;
+        width: 20px;
+        height: 20px;
+        border: 1px solid black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+        &:hover {
+          background-color: rgb(118, 162, 177);
+          cursor: pointer;
+          user-select: none;
+        }
+      }
+      &__bar {
+        background-color: lightblue;
+        border-radius: 5px 5px 0px 0px;
+        width: 100%;
+      }
+    }
+    &__button {
+      margin-bottom: 20px;
+      margin-top: 10px;
+      border-radius: 20px;
+      background-color: lightblue;
+      width: fit-content;
+      padding: 5px 10px;
+      max-width: 30vw;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: .8rem;
+      &:hover {
         background-color: rgb(118, 162, 177);
         cursor: pointer;
         user-select: none;
-    }
-    }
-    &__bar {
-      background-color: lightblue;
-      border-radius: 5px 5px 0px 0px;
-      width: 100%;
-     
-      
-    }
-    &__button{
-        margin-bottom: 20px;
-        margin-top: 10px;
-        border-radius: 20px;
-        background-color: lightblue;
-        width: fit-content;
-        padding: 10px 20px;
-        max-width: 30vw;
-        &:hover{
-            background-color: rgb(118, 162, 177);
-            cursor: pointer;
-            user-select: none;
-        }
+      }
     }
   }
 }
