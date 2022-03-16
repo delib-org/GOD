@@ -47,6 +47,9 @@
     "react/react-in-jsx-scope":"off",
     "react/jsx-indent":"off",
     "no-trailing-spaces":"off",
-    "no-multiple-empty-lines":"off"
+    "no-multiple-empty-lines":"off",
+    "function-paren-newline":"off",
+    "operator-linebreak":"off",
+    "@typescript-eslint/indent":"off"
   }
 }

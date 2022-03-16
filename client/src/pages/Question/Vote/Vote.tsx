@@ -14,7 +14,12 @@ function Vote(props: QuestionInfoProps) {
     return (
       <div className="votePanel">
         {map(question.solutions, (solution, i: number) => (
-          <VoteBar key={`solution-${i}`} solution={solution} maxVotes={12} />
+          <VoteBar
+            key={`solution-${i}`}
+            questionId={question._id}
+            solution={solution}
+            maxVotes={12}
+          />
         ))}
       </div>
     );

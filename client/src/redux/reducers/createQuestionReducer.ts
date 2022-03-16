@@ -25,6 +25,7 @@ export interface QuestionSchema {
   enableMoveTo3: boolean,
   active: boolean,
   solutions: any,
+  votes:any
 }
 
 // Define the initial state using that type

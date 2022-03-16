@@ -1,10 +1,25 @@
+import { sendVote } from "utils/socket";
+import { useAppSelector, useAppDispatch } from "redux/hooks";
+import { User, userSelector } from "redux/reducers/userReducer";
+import { voteSolution, Vote } from "redux/reducers/questionsReducers";
+
 interface VoteBarProps {
   solution: any;
   maxVotes: number;
+  questionId: string;
 }
 
 const VoteBar = (props: VoteBarProps) => {
-  const { solution } = props;
+  const { questionId, solution } = props;
+  const dispatch = useAppDispatch();
+  const user: User = useAppSelector(userSelector);
+
+  const handleVote = () => {
+    // sendVote({ solutions, solutionId: solution._id, userId: user.id });
+    dispatch(
+      voteSolution({ questionId, solutionId: solution._id, userId: user.id })
+    );
+  };
 
   try {
     const { title } = solution;
@@ -15,7 +30,9 @@ const VoteBar = (props: VoteBarProps) => {
           <div className="voteBar__top__i">i</div>
           <div className="voteBar__top__bar" style={{ height: "45%" }} />
         </div>
-        <div className="voteBar__button">{title}</div>
+        <div className="voteBar__button" onClick={handleVote}>
+          {title}
+        </div>
       </div>
     );
   } catch (err) {
