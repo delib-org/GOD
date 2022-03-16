@@ -60,7 +60,7 @@ export const questionsSlice = createSlice({
         set(question, `votes.${userId}`, solutionId);
       } else {
         //delete
-        delete question.votes[userId];
+        question.votes[userId] = false;
       }
     },
     publishQuestion: (state, action: PayloadAction<any>) => {
