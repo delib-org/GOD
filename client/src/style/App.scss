@@ -57,6 +57,10 @@ html {
   }
 }
 
+a {
+  text-decoration: none !important;
+}
+
 // texts
 h1 {
   color: $main_header;
@@ -80,7 +84,7 @@ h1 {
 
 h2 {
   color: $main_subHeader;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 #root, .page {
@@ -125,39 +129,73 @@ h2 {
 
 //components
 .wrapper {
-  max-width: 550px;
-  margin: auto;
+  margin: 0 2rem;
+
+  .preview {
+    h2 {
+      font-size: 1.3em;
+    }
+
+    img {
+      width: 100%;
+    }
+  }
 }
 
-@media only screen and (max-width: 550px) {
-  .wrapper {
-    margin: 0rem 2rem;
+.page.create-question-success {
+  text-align: center;
+  flex-grow: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h2 {
+    font-size: 1.1em;
+  }
+
+  p {
+    margin-bottom: 28px;
+  }
+
+  .button {
+    width: 50%;
+    min-width: 186px;
+    margin: 15px auto;
+
+    &.share-button {
+      background-color: #4F4F4F;
+    }
   }
 }
 
 .bottomNavButtons {
   display: flex;
   justify-content: center;
-  margin-top: 3rem;
-  background-color: none;
+  padding: 0 20px;
 
   a {
     text-decoration: none;
-    margin: 0rem 1rem;
+    width: 100%;
+
+    &.secondary {
+      width: unset;
+    }
   }
 }
 
 @media only screen and (max-width: 550px) {
   .bottomNavButtons {
     position: fixed;
-    bottom: 0px;
-    left: 0px;
+    bottom: 0;
+    left: 0;
     background-color: $main;
     width: 100%;
     justify-content: center;
     display: flex;
-    min-height: 4rem;
+    //min-height: 4rem;
     align-items: center;
+    padding: 12px 20px;
   }
 }
 
@@ -190,54 +228,72 @@ h2 {
 .indicator {
   width: 100%;
   background-color: $main;
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-  max-width: 550px;
-  margin: auto;
+  padding: 0 20px;
+  margin-bottom: 35px;
+
+  .indicator-internal {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+  }
 
   hr {
     position: absolute;
     width: 98%;
     top: 50%;
     transform: translateY(-1px);
-    margin: 0px;
-    // z-index: -1;
+    margin: 0;
+    border-top: solid 1px #c4c4c4;
   }
 
-  a, .step{
-    width: fit-content;
-    text-decoration: none;
-    display: flex;
-    justify-content: center;
+  .indicator-step {
     z-index: 1;
+    background-color: white;
+    border: 1px solid #c4c4c4;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 3rem;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
     user-select: none;
+    position: relative;
+  }
 
-    div {
-      background-color: white;
-      border: 1px solid gray;
-      width: 2rem;
-      height: 2rem;
-      border-radius: 3rem;
-      display: flex;
-      align-items: center;
-      text-align: center;
-      justify-content: center;
-      user-select: none;
-    }
+  .indicator-label {
+    color: #0F344F;
+    font-size: .75em;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &--complete {
+    background-color: #0F344F !important;
+    color: white !important;
   }
 
   &--current {
-    background-color: #0F344F !important;
-    color: white !important;
+    background-color: white !important;
+    border-color: black !important;
+  }
+
+  &--disabled {
+    background-color: #c4c4c4 !important;
+
+    .indicator-label {
+      color: #C4C4C4;
+    }
   }
 }
 
 @media only screen and (max-width: 550px) {
-  .indicator {
-    margin: 0rem 2rem;
-    width: calc(100vw - 6rem);
-  }
+  //.indicator {
+  //  margin: 0rem 2rem;
+  //  width: calc(100vw - 6rem);
+  //}
 }
 
 

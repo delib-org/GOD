@@ -1,18 +1,20 @@
+@import "style/vars";
+
 .card {
   display: grid;
   grid-template-columns: 3fr 1fr;
   height: 150px;
-  //width: 40%;
   min-width: 300px;
   border-radius: 0.5em;
-  box-shadow: -1px 0em 1em 0em rgba(0, 0, 0, 0.5);
-  //margin: 1em;
-  margin-top: 2em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
   overflow: hidden;
   text-align: center;
   align-items: center;
   color: rgb(255, 255, 255);
 
+  &:not(:first-child) {
+    margin-top: 25px;
+  }
 
   &__edit {
     display: grid;
@@ -28,7 +30,8 @@
     height: 100%;
     width: 100%;
     overflow: hidden;
-    background-color: rgb(204, 146, 58);
+    border: solid 1px $border_gray;
+    border-radius: 0 0.5em 0.5em 0;
 
     &__votes {
       background-color: rgb(255, 255, 255);
@@ -42,23 +45,31 @@
 
       &__icon {
         font-size: 1.5em;
-        margin-right: 0.5em;
         margin: 6px;
       }
     }
 
-    &__shere {
-      background-color: rgb(15, 52, 79);
+    &__share {
+      background-color: white;
+      color: $mid_gray;
       height: 100%;
       display: grid;
       align-items: center;
     }
 
     &__views {
-      background-color: rgb(57, 182, 250);
+      background-color: $light_blue;
       height: 100%;
       display: grid;
       align-items: center;
+    }
+
+    & > div {
+      padding: 0 6px;
+
+      &:not(:last-child) {
+        border-bottom: solid 1px $border_gray;
+      }
     }
   }
 
@@ -66,30 +77,39 @@
     position: relative;
     height: 100%;
     background-size: cover;
+    border-radius: 0.5em 0 0 0.5em;
+    border: solid 1px $border_gray;
+    border-right: none;
   }
 
   &__status {
     position: absolute;
     float: left;
     font-weight: bold;
-    background-color: rgb(15, 52, 79);
-    border-radius: 0px 15px 15px 0px;
-    box-shadow: 0 0.5em 1em -0.5em rgba(0, 0, 0, 0.5);
+    background-color: $dark_blue;
+    border-radius: 0 20px 20px 0;
     top: 15px;
-    padding: 5px 20px 5px 20px;
+    padding: 5px 20px 5px 10px;
     display: grid;
     font-size: 0.9em;
+    border: solid 1px white;
+    border-left: none;
   }
 
   &__title {
     position: absolute;
-    float: left;
-    border-radius: 0px 5px 0px 0px;
-    background-color: #ffffff;
-    top: 81%;
-    color: rgb(15, 52, 79);
+    bottom: 0;
+    left: 0;
+    right:25px;
     font-weight: bold;
-    text-align: start;
-    padding: 5px 5px 5px 5px;
+    text-align: left;
+    padding: 6px 10px;
+    background-color: white;
+    color: black;
+    border-radius: 0 0.5em 0 0.5em;
+    font-size: .875em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }

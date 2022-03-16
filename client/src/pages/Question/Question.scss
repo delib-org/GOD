@@ -26,7 +26,7 @@
     background: no-repeat center center;
     background-size: 100% auto;
     max-height: 41.67vw;
-    min-height: 200px;
+    min-height: 150px;
     position: relative;
 
     .share-button {
@@ -61,6 +61,8 @@
     background-color: white;
     box-shadow: 0 12px 8px 10px grey;
     justify-content: center;
+    z-index: 10;
+
     &__input {
       width: revert;
       display: flex;
@@ -111,7 +113,7 @@
 
   .toolbar {
     position: fixed;
-    bottom: 130px;
+    bottom: 70px;
     right: 16px;
 
     button {

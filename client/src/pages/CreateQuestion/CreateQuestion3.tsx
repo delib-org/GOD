@@ -1,33 +1,22 @@
 import React, { FC } from 'react';
-import { Link } from 'react-router-dom';
-
-// redux
-
-// controls
-
-// componens
-
 // material UI components
-import Button from '@mui/material/Button';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ImageIcon from '@mui/icons-material/Image';
-
 // Cloudaniry
 import { AdvancedImage } from '@cloudinary/react';
 import { Cloudinary } from '@cloudinary/url-gen';
 import { fill } from '@cloudinary/url-gen/actions/resize';
+
+import { NextButton, BackButton } from "components/Wizard";
+import Loader from 'components/Loader/Loader';
+import { uploadFileThunk, newQuestionSelector } from 'redux/reducers/createQuestionReducer';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import CreateQuestionProps from './CreateQuestionProps';
-import Loader from '../../components/Loader/Loader';
-import { uploadFileThunk, selectLoader, selectImage } from '../../redux/reducers/createQuestionReducer';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 
 // https://www.youtube.com/watch?v=Y-VgaRwWS3o
 
 const CreateQuestion3: FC<CreateQuestionProps> = (props: CreateQuestionProps) => {
   const dispatch = useAppDispatch();
-  const loader = useAppSelector(selectLoader);
-  const image = useAppSelector(selectImage);
+  const { loader, image } = useAppSelector(newQuestionSelector);
   const { path } = props;
 
   const cld = new Cloudinary({
@@ -85,12 +74,8 @@ const CreateQuestion3: FC<CreateQuestionProps> = (props: CreateQuestionProps) =>
             : null}
         </div>
         <div className="bottomNavButtons">
-          <Link to={`${path}/2`}>
-            <Button variant="outlined" startIcon={<ArrowBackIosIcon />}>Back</Button>
-          </Link>
-          <Link to={`${path}/4`}>
-            <Button variant="contained" endIcon={<ArrowForwardIosIcon />}>Next</Button>
-          </Link>
+          <BackButton linkTo={`${path}/2`} />
+          <NextButton linkTo={`${path}/4`} />
         </div>
       </div>
     </div>

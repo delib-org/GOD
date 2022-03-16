@@ -27,6 +27,11 @@ export const questionsSlice = createSlice({
   name: 'questions',
   initialState: {},
   reducers: {
+    upsertQuestion: (state, action: PayloadAction<any>) => {
+      const { payload: question } = action;
+      // @ts-ignore
+      state[question._id] = question
+    },
     addSolution: (state, action: PayloadAction<any>) => {
       const { payload: solution } = action;
       const question = _.get(state, solution.parentId) as QuestionSchema;
@@ -45,6 +50,11 @@ export const questionsSlice = createSlice({
       }
       question.solutions[i].likes[userId] = vote;
     },
+    publishQuestion: (state, action: PayloadAction<any>) => {
+      const { payload: { questionId } } = action;
+      const question = _.get(state, questionId) as QuestionSchema;
+      question.status = 'pending'
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -53,6 +63,34 @@ export const questionsSlice = createSlice({
 });
 
 // actions
+interface NewQuestionPayload {
+  title: string,
+  description: string,
+  image: any,
+  status?: string;
+}
+
+export const upsertQuestion = (question: NewQuestionPayload, cb?: Function) => async (dispatch: any) => {
+  try {
+    if (!question.title) return
+    const { data } = await axios.post('/questions/upsert', question);
+    dispatch(questionsSlice.actions.upsertQuestion(data))
+    if (cb) cb()
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export const publishQuestion = (questionId: string, cb?: Function) => async (dispatch: any) => {
+  try {
+    await axios.post('/questions/activate', { activate: true, questionId });
+    dispatch(questionsSlice.actions.publishQuestion({ questionId }));
+    if (cb) cb()
+  } catch (e) {
+    console.error(e);
+  }
+}
+
 export const addSolution = (solution: Solution) => async (dispatch: any) => {
   try {
     const { data } = await axios.post('/questions/add-solution', solution);
@@ -70,7 +108,7 @@ export const likeSolution = (qid: string, sid: string, userId: string, vote: boo
     console.log('likeSolution', { data });
 
     dispatch(questionsSlice.actions.likeSolution({
-      qid, sid, vote, userId,
+      qid, sid, vote: data.resolvedVote, userId,
     }));
   } catch (error) {
     console.error(error);

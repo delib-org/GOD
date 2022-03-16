@@ -1,23 +1,16 @@
 import React, { FC, useState } from 'react';
-import { Link } from 'react-router-dom';
-
-import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { NextButton, BackButton } from "components/Wizard";
 import {
-  selectDescription,
-  selectEnableMoveTo3,
+  newQuestionSelector,
   setDescription,
   setEnableMoveTo3,
-} from '../../redux/reducers/createQuestionReducer';
-import { useAppSelector, useAppDispatch } from '../../redux/hooks';
-
+} from 'redux/reducers/createQuestionReducer';
+import { useAppSelector, useAppDispatch } from 'redux/hooks';
 import CreateQuestionProps from './CreateQuestionProps';
 
 const CreateQuestion2: FC<CreateQuestionProps> = (props: CreateQuestionProps) => {
-  const description = useAppSelector(selectDescription);
-  const enableNext = useAppSelector(selectEnableMoveTo3);
+  const { description, enableMoveTo3: enableNext } = useAppSelector(newQuestionSelector);
   const dispatch = useAppDispatch();
   const { path } = props;
 
@@ -59,26 +52,11 @@ const CreateQuestion2: FC<CreateQuestionProps> = (props: CreateQuestionProps) =>
           name="username"
           onChange={handleChange}
         />
-        <div className={`charCount ${charClass}`}>
-          (
-          {charCount}
-          /
-          {maxChar}
-          )
-        </div>
+        <div className={`charCount ${charClass}`}>({charCount}/{maxChar})</div>
       </div>
       <div className="bottomNavButtons">
-
-        <Link to={`${path}/1`}>
-          <Button variant="outlined" startIcon={<ArrowBackIosIcon />}>Back</Button>
-        </Link>
-        {enableNext
-          ? (
-            <Link to={`${path}/3`}>
-              <Button variant="contained" endIcon={<ArrowForwardIosIcon />}>Next</Button>
-            </Link>
-          )
-          : <Button variant="contained" endIcon={<ArrowForwardIosIcon />} disabled>Next</Button>}
+        <BackButton linkTo={`${path}/1`} />
+        <NextButton linkTo={enableNext ? `${path}/3` : ''} disabled={!enableNext} />
       </div>
     </div>
   );

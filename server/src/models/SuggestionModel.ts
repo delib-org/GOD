@@ -16,7 +16,7 @@ export const SuggestionSchema = new Schema({
   locale: String,
   // image: String,
   date: Date,
-  likes: { type: Map, of: Boolean },
+  likes: { type: Map, of: Boolean, default: new Map() },
   roles: {
     creator: UserSchema,
     // admins:[UserSchema],

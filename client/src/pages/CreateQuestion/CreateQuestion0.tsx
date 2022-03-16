@@ -1,6 +1,5 @@
 import React from 'react';
-import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
+import Button from "components/Button";
 
 import CreateQuestionProps from './CreateQuestionProps';
 
@@ -30,9 +29,7 @@ function CreateQuestion0(props: CreateQuestionProps) {
         </div>
       </div>
       <div className="bottomNavButtons">
-        <Link to={`${path}/1`}>
-          <Button variant="contained">Lets Start</Button>
-        </Link>
+        <Button linkTo={`${path}/1`}>Lets Start</Button>
       </div>
     </div>
   );

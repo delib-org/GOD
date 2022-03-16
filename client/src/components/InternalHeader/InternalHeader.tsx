@@ -4,20 +4,23 @@ import { ArrowBack } from '@mui/icons-material';
 import './InternalHeader.scss';
 
 interface InternalHeaderProps {
-  title: string;
+  title?: string;
   backUrl?: string;
+  children?: any;
 }
 
 function InternalHeader(props: InternalHeaderProps) {
   const history = useHistory();
 
-  const { title, backUrl } = props;
+  const { title, backUrl, children } = props;
 
   return (
     <div className="internal-header">
-      {backUrl ? (<ArrowBack onClick={() => history.push(backUrl)} />) : (<div />)}
+      <div>
+        {backUrl ? (<ArrowBack onClick={() => history.push(backUrl)} />) : (<div />)}
+      </div>
       <div className="header-title">{title}</div>
-      <div />
+      <div>{children}</div>
     </div>
   );
 }

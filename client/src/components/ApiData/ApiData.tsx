@@ -11,12 +11,11 @@ interface ApiDataProps {
 function ApiData({ apiKey, children }: ApiDataProps) {
   const { status, error } = useAppSelector(apiSelector(apiKey));
 
-  console.log(apiKey, status);
   switch (status) {
     case 'failed':
       return (<div className="api-error">{error?.message}</div>);
     case 'pending':
-      return (<div className="loader"><GridLoader /></div>);
+      return (<div className="loader"><GridLoader color="#747474" /></div>);
     case 'fulfilled':
       return children;
     default:

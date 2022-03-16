@@ -1,7 +1,8 @@
-import arrowCircleUp from './arrow-circle-up.svg';
-import arrowCircleDown from './arrow-circle-down.svg';
+import arrowCircle from './arrow-circle-up.svg';
+// import arrowCircleDown from './arrow-circle-down.svg';
+import arrowCircleActive from './arrow-circle-active.svg';
 
 export {
-  arrowCircleUp,
-  arrowCircleDown,
+  arrowCircle,
+  arrowCircleActive,
 };

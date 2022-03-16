@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Solution } from 'types';
 import './SolutionCard.scss';
-import { arrowCircleUp, arrowCircleDown } from 'img/icons';
+import { arrowCircle, arrowCircleActive } from 'img/icons';
 import SVG from 'components/SVG';
 import TruncateMarkup from 'react-truncate-markup';
 import Parser from 'html-react-parser';
@@ -15,15 +15,16 @@ interface SolutionCardProps {
   solution: Solution,
   number: number,
   questionId: string,
-  fullText?: boolean,
+  isPreview?: boolean,
 }
+
 function SolutionCard(props: SolutionCardProps) {
   const {
-    solution, number, questionId, fullText = false,
+    solution, number, questionId, isPreview,
   } = props;
 
   const dispatch = useAppDispatch();
-  const [truncate, setTruncate] = useState(!fullText);
+  const [truncate, setTruncate] = useState(!isPreview);
   const { id: userId } = useAppSelector(userSelector);
 
   const userVote = _.get(solution, ['likes', userId]);
@@ -43,22 +44,24 @@ function SolutionCard(props: SolutionCardProps) {
         ) : (
           <>
             <div>{Parser(solution.description)}</div>
-            {!fullText && (
+            {!isPreview && (
             <div onClick={() => setTruncate(!truncate)} className="ellipsis">Show less</div>
             )}
           </>
         )}
       </div>
+      {!isPreview && (
       <div className="card-bottom">
         <div className="center-aligned-row">
-          <SVG src={arrowCircleUp} className={classNames({ active: userVote === true })} onClick={() => vote(true)} />
+          <SVG src={userVote === true ? arrowCircleActive : arrowCircle} className={classNames({ active: userVote === true })} onClick={() => vote(true)} />
           <span className="number">{upvotes}</span>
         </div>
         <div className="center-aligned-row">
-          <span className="number">{downvotes}</span>
-          <SVG src={arrowCircleDown} className={classNames({ active: userVote === false })} onClick={() => vote(false)} />
+          <span className="number">{`${downvotes > 0 ? '-' : ''}${downvotes}`}</span>
+          <SVG src={userVote === false ? arrowCircleActive : arrowCircle} className={classNames('rotate', { active: userVote === false })} onClick={() => vote(false)} />
         </div>
       </div>
+      )}
     </div>
   );
 }

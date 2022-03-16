@@ -10,7 +10,7 @@
     "dev:old": "nodemon",
     "tsc": "tsc src/server.ts -w",
     "dev": "nodemon -L src/server.ts",
-    "lint": "npx eslint src/** --ext .js,.jsx,.ts,.tsx --fix"
+    "lint": "npx eslint src --ext .js,.jsx,.ts,.tsx --fix"
   },
   "keywords": [],
   "author": "",

@@ -1,0 +1,35 @@
+@import "style/vars";
+
+.button {
+  background-color: $light_blue;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border-radius: 20px;
+  padding: 10px 24px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  text-transform: uppercase;
+  font-weight: 700;
+  cursor: pointer;
+  flex-grow: 2;
+
+  svg {
+    max-height: .75em;
+  }
+
+  &.secondary {
+    width: 100px;
+    background-color: white;
+    color: $gray;
+    border: solid 1px $gray;
+    flex-grow: unset;
+    margin-right: 20px;
+  }
+
+  &.disabled {
+    opacity: .5;
+    cursor: not-allowed;
+  }
+}

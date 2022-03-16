@@ -2,9 +2,9 @@ import Question from '../models/QuestionModel';
 import User from '../models/UserModel';
 import Solution from '../models/SuggestionModel';
 
-var ObjectId = require('mongoose').Types.ObjectId;
+const ObjectId = require('mongoose').Types.ObjectId;
 
-export async function createQuestion(req: any, res: any) {
+export async function upsertQuestion(req: any, res: any) {
   try {
     // get question
     const question = req.body;
@@ -12,20 +12,14 @@ export async function createQuestion(req: any, res: any) {
     question.creatorId = req.user.id;
     question.members = [req.user.id];
 
-    if (question.questionId) {
+    if (question._id) {
       // update
-
-      const response = await Question.findOneAndUpdate({ _id: new ObjectId(question.questionId) }, question);
-
+      const response = await Question.findOneAndUpdate({ _id: new ObjectId(question._id) }, question);
       res.send({ update: true, response });
     } else {
       // create new question
-      question.active = false;
-      const results = await Question.create(question);
-
-      const { _id: questionId } = results;
-
-      res.send({ questionId, results });
+      const result = await Question.create(question);
+      res.send(result);
     }
   } catch (error: any) {
     console.error(error);
@@ -35,12 +29,12 @@ export async function createQuestion(req: any, res: any) {
 
 export async function activateQuestion(req: any, res: any): Promise<void> {
   try {
-    const { activate, questionId } = req.body;
-    if (typeof activate === 'boolean' && typeof questionId === 'string') {
-      const result = await Question.updateOne({ _id: new ObjectId(questionId) }, { activate });
+    const { questionId } = req.body;
+    if (typeof questionId === 'string') {
+      const result = await Question.updateOne({ _id: new ObjectId(questionId) }, { status: 'pending' });
       res.send({ result, ok: true });
     } else {
-      throw new Error(`activate should be bollean but was ${typeof activate}`);
+      res.send({ error: `Error updating question ${questionId}` });
     }
   } catch (error: any) {
     res.send({ error: error.message });
@@ -56,12 +50,6 @@ export async function getAllQuestions(req: any, res: any): Promise<void> {
       members: userId,
     })
       .populate('solutions');
-
-    // for (let i in result) {
-    //   result[i].members = [req.user.id];
-    //
-    //   result[i].admins = [];
-    // }
 
     res.send({ result, ok: true });
   } catch (error: any) {
@@ -100,17 +88,21 @@ export const setSolutionLike = async (req: any, res: any) => {
     const userId = req.user.id;
 
     const key = `likes.${userId}`;
-    console.log({ key });
+
+    const solution = await Solution.findById(sid)
+    const userVote = solution.likes.get(userId)
+    const resolvedVote = vote === userVote ? null : vote
+
     await Solution.updateOne(
       { _id: sid },
       {
         $set: {
-          [key]: vote,
+          [key]: resolvedVote,
         },
       },
     );
 
-    res.send({ success: true });
+    res.send({ resolvedVote });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });

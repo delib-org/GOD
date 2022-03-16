@@ -122,16 +122,8 @@ function Step3(props: Step3Props) {
     <>
       <div className="step step-3">
         <h2>Preview</h2>
-        <div className="warnings--text">
-          Please review all details as once an answer is published it cannot be
-          edited.
-        </div>
-        <SolutionCard
-          solution={solution}
-          number={-1}
-          fullText
-          questionId={questionId}
-        />
+        <div className="warnings--text">Please review all details as once an answer is published it cannot be edited.</div>
+        <SolutionCard solution={solution} number={-1} isPreview questionId={questionId} />
       </div>
       <div className="buttons">
         <Button onClick={() => wizard.previousStep()}>{"< Back"}</Button>

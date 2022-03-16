@@ -10,6 +10,7 @@ import CreateQuestion from './CreateQuestion';
 import Notifications from './Notifications';
 import Login from './Login';
 import AddSolution from './Question/AddSolution';
+import CreateQuestionSuccess from "./CreateQuestion/CreateQuestionSuccess";
 
 function Fail() {
   return (
@@ -42,6 +43,9 @@ function AppRoutes() {
         </Route>
         <Route path="/fail">
           <Fail />
+        </Route>
+        <Route exact path="/create_question/success">
+          <CreateQuestionSuccess />
         </Route>
         <Route path="/create_question">
           <CreateQuestion />
