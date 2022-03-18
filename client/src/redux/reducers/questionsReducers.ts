@@ -55,11 +55,13 @@ export const questionsSlice = createSlice({
         payload: { questionId, solutionId, userId },
       } = action;
       const question = get(state, questionId) as QuestionSchema;
+      
       const previousVote = get(question, `votes.${userId}`, false);
+      console.log("previousVote:", previousVote);
+
       if (previousVote === false) {
         set(question, `votes.${userId}`, solutionId);
       } else {
-        //delete
         question.votes[userId] = false;
       }
     },
@@ -89,7 +91,7 @@ interface NewQuestionPayload {
 }
 
 export interface Vote {
-  questionId:string;
+  questionId: string;
   solutionId: string;
   userId: string;
 }

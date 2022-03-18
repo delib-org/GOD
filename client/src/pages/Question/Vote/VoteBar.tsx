@@ -16,6 +16,7 @@ const VoteBar = (props: VoteBarProps) => {
 
   const handleVote = () => {
     // sendVote({ solutions, solutionId: solution._id, userId: user.id });
+    console.log("solution._id:", solution._id);
     dispatch(
       voteSolution({ questionId, solutionId: solution._id, userId: user.id })
     );

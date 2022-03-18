@@ -1,6 +1,15 @@
+import { useEffect } from "react";
 import "./Vote.scss";
 import { map } from "lodash";
 
+// controls
+import { calcVotes } from "utils/votes";
+
+// model
+import { useAppSelector } from "redux/hooks";
+import { questionById } from "redux/reducers/questionsReducers";
+
+// components
 import VoteBar from "./VoteBar";
 
 export interface QuestionInfoProps {
@@ -9,7 +18,16 @@ export interface QuestionInfoProps {
 
 function Vote(props: QuestionInfoProps) {
   const { question } = props;
-  console.log(question.solutions);
+
+  const { votes } = useAppSelector(questionById(question._id));
+
+  useEffect(() => {
+    console.log(votes);
+    if (votes) {
+      const count = calcVotes(question.solutions, votes);
+    }
+  }, [votes]);
+
   try {
     return (
       <div className="votePanel">
