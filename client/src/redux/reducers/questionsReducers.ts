@@ -54,15 +54,21 @@ export const questionsSlice = createSlice({
       const {
         payload: { questionId, solutionId, userId },
       } = action;
-      const question = get(state, questionId) as QuestionSchema;
-      
-      const previousVote = get(question, `votes.${userId}`, false);
-      console.log("previousVote:", previousVote);
+      const question = get(
+        state,
+        `${questionId}`,
+        false
+      );
+      console.log(question)
+      if (question) {
+        const previousVote = get(question, `votes.${userId}`, false);
+        console.log("previousVote:", previousVote);
 
-      if (previousVote === false) {
-        set(question, `votes.${userId}`, solutionId);
-      } else {
-        question.votes[userId] = false;
+        if (previousVote === false) {
+          set(question, `votes.${userId}`, solutionId);
+        } else {
+          question.votes[userId] = false;
+        }
       }
     },
     publishQuestion: (state, action: PayloadAction<any>) => {
