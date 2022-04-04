@@ -1,83 +1,48 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
-import type { RootState } from '../store';
-import { uploadFile } from '../../controlers/assets';
-import { activateQuestion } from '../../controlers/questions/questions';
-import { Image } from '../../model/image'
+import _ from 'lodash'
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import type { RootState } from 'redux/store';
+import { uploadFile } from 'utils/uploadFile';
+import { Image } from 'utils/image';
 
-export interface ActiveQuestionObject{
-  isActive:boolean;
-  questionId:string;
-}
-
-//thunk for upload image
+// thunk for upload image
 export const uploadFileThunk = createAsyncThunk(
   'newQuestion/uploadQuestion',
-  async (file: File, thunkAPI) => {
+  async (file: File) => {
     console.log(file);
-    const fileData = await uploadFile(file);
-    return fileData;
-  }
-)
-
-
-//thunk for activate question
-export const activateQuestionThunk = createAsyncThunk(
-  'newQuestion/activateQuestion',
-  async (isActivateObj:ActiveQuestionObject, thunkAPI) => {
-    const {isActive, questionId} = isActivateObj;
-    const isActivateDB = await activateQuestion(isActive, questionId);
-    return isActivateDB;
-  }
-)
-
-
+    return await uploadFile(file);
+  },
+);
 
 // Define a type for the slice state
 export interface QuestionSchema {
-  questionId: string | boolean;
-  value: number,
+  _id?: string,
   title: string,
   image: Image,
+  schedule: string[],
   status: string,
   description: string,
-  loader: boolean,
-  enableMoveTo2: boolean,
-  enableMoveTo3: boolean,
-  activate: boolean
+  imageUploading: boolean,
+  solutions: any,
+  watchlist: any,
 }
 
 // Define the initial state using that type
 const initialState = {
-  questionId: false,
-  value: 1,
   title: '',
   description: '',
   image: {},
-  status: '',
-  loader: false,
-  enableMoveTo2: false,
-  enableMoveTo3: false,
-  activate: false
+  imageUploading: false,
+  solutions: [],
+  watchlist: {},
 } as QuestionSchema;
 
-export const questionsSlice = createSlice({
+export const createQuestionSlice = createSlice({
   name: 'newQuestion',
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    increment: (state) => {
-
-      if (state.value < 4) state.value += 1;
-    },
-    decrement: (state) => {
-      if (state.value > 1) state.value -= 1;
-    },
-    // Use the PayloadAction type to declare the contents of `action.payload`
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value += action.payload
-    },
-    setQuestionId: (state, action: PayloadAction<string>) => {
-      state.questionId = action.payload;
+    loadDraft: (state, action: PayloadAction<string>) => {
+      _.merge(state, action.payload)
     },
     setTitle: (state, action: PayloadAction<string>) => {
       state.title = action.payload;
@@ -85,65 +50,60 @@ export const questionsSlice = createSlice({
     setDescription: (state, action: PayloadAction<string>) => {
       state.description = action.payload;
     },
+    setStartScedule: (state, action: PayloadAction<string>) => {
+      state.schedule[0] = action.payload;
+    },
+    setEndScedule: (state, action: PayloadAction<string>) => {
+      state.schedule[1] = action.payload;
+    },
+    setVoteEndScedule: (state, action: PayloadAction<string>) => {
+      state.schedule[2] = action.payload;
+    },
+    removeScedules: (state) => {
+      state.schedule = [];
+    },
     setImage: (state, action) => {
       state.image = action.payload;
     },
-    setEnableMoveTo2: (state, action) => {
-      state.enableMoveTo2 = action.payload;
-    },
-    setEnableMoveTo3: (state, action) => {
-      state.enableMoveTo3 = action.payload;
-    },
-    setActivate: (state, action) => {
-      console.log(action)
-      state.activate = action.payload;
-    }
+    clear: () => initialState,
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
-      .addCase(uploadFileThunk.pending, (state: any, action: any) => {
-        state.status = 'pending';
-        state.loader = true;
+      .addCase(uploadFileThunk.pending, (state: any) => {
+        state.imageUploading = true;
       })
       .addCase(uploadFileThunk.fulfilled, (state: any, action: any) => {
         state.image = JSON.parse(action.payload);
-        state.status = 'success';
-        state.loader = false;
+        state.imageUploading = false;
       })
       .addCase(uploadFileThunk.rejected, (state: any, action: any) => {
         state.image = action.payload;
-        state.status = 'failed';
-        state.loader = false;
+        state.imageUploading = false;
       })
-      .addCase(activateQuestionThunk.pending, (state:any, action:any)=>{
-        state.status = 'pending';
-        state.loader = true;
-      })
-      .addCase(activateQuestionThunk.fulfilled, (state: any, action: any) => {
-        state.image = JSON.parse(action.payload);
-        state.status = 'success';
-        state.loader = false;
-      })
-      .addCase(activateQuestionThunk.rejected, (state: any, action: any) => {
-        state.image = action.payload;
-        state.status = 'failed';
-        state.loader = false;
-      })
-  }
-})
+  },
+});
 
-export const { increment, decrement, incrementByAmount, setQuestionId, setTitle, setDescription, setEnableMoveTo2, setEnableMoveTo3, setActivate } = questionsSlice.actions
+export const { loadDraft, setTitle, setDescription, clear, removeScedules, setEndScedule, setStartScedule, setVoteEndScedule } = createQuestionSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectQuestion = (state: RootState) => state.newQuestion
-export const selectCount = (state: RootState) => state.newQuestion.value;
-export const selectTitle = (state: RootState) => state.newQuestion.title;
-export const selectDescription = (state: RootState) => state.newQuestion.description;
-export const selectLoader = (state: RootState) => state.newQuestion.loader;
-export const selectImage = (state: RootState) => state.newQuestion.image;
-export const selectEnableMoveTo2 = (state: RootState) => state.newQuestion.enableMoveTo2;
-export const selectEnableMoveTo3 = (state: RootState) => state.newQuestion.enableMoveTo3;
-export const selectQuestionId = (state: RootState) => state.newQuestion.questionId;
+export const newQuestionSelector = (state: RootState) => state.newQuestion;
 
+export const isTitleSet = (title: string) => title.length > 6 && title.length < 140
+export const isDescriptionSet = (description: string) => description.length > 6 && description.length < 500
+export const stepEnabledSelector = (currentStep: number, step: Number) => (state: RootState) => {
+  const { title, description, status } = state.newQuestion
+  switch (step) {
+    case 1:
+      return true
+    case 2:
+      return isTitleSet(title) && (status === 'draft' || currentStep >= 2)
+    case 3:
+      return isDescriptionSet(description) && (status === 'draft' || currentStep >= 3)
+    default:
+      return isTitleSet(title) && isDescriptionSet(description) && (status === 'draft' || currentStep >= step)
+  }
+}
 
-export default questionsSlice.reducer
+const createQuestionReducer = createQuestionSlice.reducer;
+
+export default createQuestionReducer;

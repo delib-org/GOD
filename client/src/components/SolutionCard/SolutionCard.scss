@@ -1,0 +1,63 @@
+@import 'style/vars';
+
+.solution-card {
+  background-color: $lighter_gray;
+  color: black;
+
+  .card-top {
+    padding: 20px;
+  }
+
+  .solution-title {
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .ellipsis {
+    text-align: right;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .solution-desc {
+
+  }
+
+  .card-bottom {
+    border-top: solid 1px $gray;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+
+    .number {
+      font-weight: 700;
+    }
+
+    & > div:nth-child(1) .number {
+      margin-left: 10px;
+    }
+
+    & > div:nth-child(2) .number {
+      margin-right: 10px;
+    }
+
+    .icon {
+      line-height: .875em;
+
+      &.rotate {
+        transform: rotate(180deg);
+      }
+
+      //&.active {
+      //  svg {
+      //    path {
+      //      background-color: black;
+      //      //filter: invert(1);
+      //      //fill: $lighter_gray;
+      //    }
+      //  }
+      //}
+    }
+  }
+}

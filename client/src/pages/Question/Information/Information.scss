@@ -1,0 +1,21 @@
+@import "style/vars";
+
+.page.page-question .question-info {
+  padding: 30px 25px 40px;
+
+  .title {
+    color: $gold;
+    font-weight: 700;
+    font-size: 1.4em;
+  }
+
+  .description {
+    margin: 12px 0;
+  }
+
+  .section-title {
+    color: $dark_blue;
+    font-weight: 700;
+    margin-top: 30px;
+  }
+}

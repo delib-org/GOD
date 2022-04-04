@@ -1,0 +1,48 @@
+{
+  "extends": ["airbnb", "airbnb-typescript"],
+  "parserOptions": {
+    "project": "./tsconfig.json",
+    //"extraFileExtensions": ["svg"],
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": ["import"],
+  "rules": {
+    "no-underscore-dangle": ["error", { "allow": ["_id"] }],
+    "import/prefer-default-export": "off",
+    "no-param-reassign": ["error", { "props": false }],
+    "react/prop-types": "off",
+    "react/no-unescaped-entities": "off",
+    "react/no-unused-prop-types": "warn",
+    "react/require-default-props": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "react/jsx-no-bind": [
+      2,
+      { "allowArrowFunctions": true, "allowFunctions": true }
+    ],
+    "implicit-arrow-linebreak": "off",
+    "react/jsx-curly-newline": "off",
+    "react/function-component-definition": "off",
+    "max-len": "off",
+    "no-console": "off",
+    "object-curly-newline": "off",
+    "jsx-a11y/interactive-supports-focus": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "@typescript-eslint/quotes": "off",
+    "@typescript-eslint/return-await": "off",
+    "@typescript-eslint/comma-dangle": "off",
+    "react/jsx-closing-bracket-location":"off",
+    "block-spacing":"off",
+    "space-before-blocks":"off",
+    "@typescript-eslint/brace-style":"off",
+    "func-names": "off",
+    "semi": "off",
+    "@typescript-eslint/semi": ["off"],
+    "@typescript-eslint/no-unused-vars": "warn",
+    "spaced-comment": "off"
+  }
+}

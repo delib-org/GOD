@@ -1,0 +1,38 @@
+.login{
+    background-color: $primary_color;
+    color: $primary_text;
+    display: flex;
+    height: 100vh;
+    h1{
+        font-size: 2rem;
+    }
+    h1, h2, h3{
+        color: $primary_text;
+    }
+    a{
+        text-decoration: none;
+        color:white;
+    }
+
+    &__wrapper{
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+        align-items: center;
+        
+        a{
+            margin-top: 5vh;
+        }
+    }
+
+    &__delib{
+        margin-top: 10vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        a{
+            text-decoration: underline;
+        }
+    }
+}

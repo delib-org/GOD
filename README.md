@@ -8,41 +8,48 @@ The current version is 4. The previous version code can be found here ([Delib-3]
 
 **Install**
 
-in root run ```npm i```
+Fork the repository and clone branch "dev" to your local machine
 
-in ```/client``` run  ```npm i```
+In ```/server``` run ```npm i```
 
-In the root directory add ```.env``` file.
+In ```/server``` add ```.env``` file.
 
-use the following configuration:
+Use the following configuration:
 ```
 GOOGLE_CLIENT_ID=<>
 GOOGLE_CLIENT_SECRET=<>
-
 PASSPORT_SECRET=<>
-
 JWT_SECRET=<>
-
 CLOUDINARY_PAAS=<>
-
 ```
 
-In the client directory add a file ```env.ts``` and write the cloudanry key you got from cloudinary.com:
+In ```/client``` run  ```npm i```
+
+In ```/client``` add ```env.ts``` and write the cloudanry key you got from cloudinary.com:
 ```
 export const CLOUDINARY_API='cloudanry_key';
 ```
 
+Install [Docker](https://docs.docker.com/compose/install/)
+
 **Run**
 
-Run local mongodb local server
+In root directory run ```docker-compose up```
 
-in root run ```npm run tsc```
+In ```/client``` run ```npm start```
 
-in root run ```npm run dev```
+**Intro**
 
-in client run ```npm start```
+[Intro video for developers on Youtube](https://youtu.be/6PHgnHJ5smQ)
 
-**Contributers**
+**Update your forked repository**
+
+If you are using github desktop, use [this procedure](https://stackoverflow.com/questions/46110615/how-to-sync-your-forked-repo-with-original-repo-in-github-desktop#:~:text=2%20Answers&text=To%20sync%20the%20master%20of,the%20'fetch%20origin'%20button.).
+
+----
+
+**Contributors**
+
 
 ***UX/UI***
 

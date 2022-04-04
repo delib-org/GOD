@@ -1,0 +1,26 @@
+@import 'style/vars';
+
+.html-editor-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 2;
+  color: rgba(0, 0, 0, 0.87);
+
+
+  .rdw-editor-wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .rdw-editor-toolbar {
+    padding: 0;
+  }
+
+  .rdw-editor-main {
+    flex-grow: 2;
+    border: solid 1px $border_gray;
+    height: unset;
+    padding: 16.5px 14px;
+  }
+}

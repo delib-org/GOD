@@ -29,19 +29,19 @@ export const theme = createTheme({
           props: { variant: 'contained' },
           style: {
             textTransform: 'uppercase',
-            borderRadius:100,
-            a_textDecoration: 'none'
+            borderRadius: 100,
+            a_textDecoration: 'none',
           },
         },
         {
           props: { variant: 'outlined' },
           style: {
             textTransform: 'uppercase',
-            borderRadius:100,
-            a_textDecoration: 'none'
+            borderRadius: 100,
+            a_textDecoration: 'none',
           },
-        }
-      ]
+        },
+      ],
     },
   },
 });

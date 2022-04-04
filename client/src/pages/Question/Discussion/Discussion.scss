@@ -1,0 +1,23 @@
+@import 'style/vars';
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .messages {
+    flex-grow: 2;
+
+    .message {
+      border-bottom: solid 1px $light_gray;
+      padding: 20px;
+
+      .creator {
+        color: $mid_gray;
+        font-size: 0.725em;
+      }
+    }
+  }
+
+
+}

@@ -1,0 +1,138 @@
+@import "style/vars";
+
+.page.page-question {
+  height: 100vh;
+  display: flex;
+  .tabs {
+    .tabs-header {
+      .tab-header {
+        width: calc(100% / 3);
+        color: $dark_gray;
+
+        &.active {
+          color: $turquoise;
+          border-color: $turquoise;
+        }
+      }
+    }
+
+    .active-tab {
+      flex-grow: 2;
+      position: relative;
+    }
+  }
+
+  .question-header {
+    background: no-repeat center center;
+    background-size: 100% auto;
+    max-height: 41.67vw;
+    min-height: 150px;
+    position: relative;
+
+    .share-button {
+      position: absolute;
+      top: 13px;
+      right: 16px;
+      background-color: white;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+
+      svg {
+        transform: translateX(-2px);
+      }
+    }
+  }
+  .internal-page {
+    flex: auto;
+    overflow-y: auto;
+  }
+
+  .solution-card {
+    margin-top: 20px;
+  }
+  .bottom-bar {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    box-shadow: 0 12px 8px 10px grey;
+    justify-content: center;
+    z-index: 10;
+
+    &__input {
+      width: revert;
+      display: flex;
+      align-items: center;
+      margin: 4px 15px;
+      height: 40px;
+      justify-content: center;
+
+      input[type="text"] {
+        width: unset;
+        flex-grow: 2;
+        max-width: 75ch;
+        border-radius: 10px;
+        height: 32px;
+        border: solid 1px $light_gray;
+        padding: 0 10px;
+      }
+
+      button[type="submit"] {
+        margin-left: 10px;
+        border: none;
+        background-color: $light_blue;
+        color: white;
+        border-radius: 8px;
+        width: 34px;
+        height: 34px;
+      }
+    }
+    .bottom-nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 58px;
+      height: 58px;
+      width: 100%;
+      background-color: white;
+      box-shadow: 0 12px 8px 10px grey;
+
+      button {
+        color: $dark_blue;
+
+        svg {
+          font-size: 2em;
+        }
+      }
+    }
+  }
+
+  .toolbar {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+
+    button {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background-color: $light_blue;
+      padding: 0;
+      min-width: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2em;
+
+      svg {
+        width: 1em;
+        height: 1em;
+        font-size: unset;
+      }
+    }
+  }
+}
