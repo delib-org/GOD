@@ -7,7 +7,7 @@ const Question = mongoose.model('Question', QuestionSchema);
 
 export async function createQuestion(req: any, res: any) {
     try {
-
+      console.log(res)
         //get question
         const question = req.body;
 

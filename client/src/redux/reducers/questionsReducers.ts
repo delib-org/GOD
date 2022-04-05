@@ -73,6 +73,7 @@ interface NewQuestionPayload {
   title: string,
   description: string,
   image: any,
+  schedule: any,
   status?: string;
 }
 

@@ -31,6 +31,7 @@ const initialState = {
   title: '',
   description: '',
   image: {},
+  schedule: [''],
   imageUploading: false,
   solutions: [],
   watchlist: {},

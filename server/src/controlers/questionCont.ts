@@ -10,7 +10,7 @@ export async function upsertQuestion(req: any, res: any) {
     // get question
     const question = req.body;
     const creatorId = req.user.id
-
+   console.log(question)
     if (question._id) {
       // update
       const response = await Question.findOneAndUpdate({ _id: new ObjectId(question._id) }, question);

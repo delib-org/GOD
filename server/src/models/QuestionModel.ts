@@ -12,6 +12,7 @@ const FileSchema = new Schema({
 export const QuestionSchema = new Schema({
   title: String,
   description: String,
+  schedule:[],
   files: [FileSchema],
   members: { type: [String], index: true },
   creatorId: String,
