@@ -25,6 +25,7 @@ const CreateQuestion4: FC<CreateQuestionProps> = (props: CreateQuestionProps) =>
     }
   }
   const handleChange = (ev: any) => {
+    console.log(ev);
     if (ev.target.id === "starttime") {
       dispatch(setStartScedule(ev.target.value));
       if (scheduleCount === 0) {
@@ -64,6 +65,7 @@ const CreateQuestion4: FC<CreateQuestionProps> = (props: CreateQuestionProps) =>
         <hr />
         <input type="date" id="voteEnd" name="voteEnd" onChange={handleChange} disabled={disable} />
       </div>
+      <br />
       <div className="bottomNavButtons">
         <BackButton linkTo={`${path}/3`} />
         <NextButton linkTo={`${path}/5`} />
