@@ -1,56 +1,46 @@
-*Global Online Democracy - Delib App*
+# Getting Started with Create React App
 
-Delib is a PWA for deliberative and democratic decision making, which was created with the help of [Deliberative Democracy Institute](http://delib.org), for [Global Online Democracy Movement](https://www.globalonlinedemocracy.org/).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-The current version is 4. The previous version code can be found here ([Delib-3](https://github.com/talyaron/delib).).
+## Available Scripts
 
-----
+In the project directory, you can run:
 
-**Install**
+### `npm start`
 
-Fork the repository and clone branch "dev" to your local machine
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-In ```/server``` run ```npm i```
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
 
-In ```/server``` add ```.env``` file.
+### `npm test`
 
-Use the following configuration:
-```
-GOOGLE_CLIENT_ID=<>
-GOOGLE_CLIENT_SECRET=<>
-PASSPORT_SECRET=<>
-JWT_SECRET=<>
-CLOUDINARY_PAAS=<>
-```
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-In ```/client``` run  ```npm i```
+### `npm run build`
 
-In ```/client``` add ```env.ts``` and write the cloudanry key you got from cloudinary.com:
-```
-export const CLOUDINARY_API='cloudanry_key';
-```
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-Install [Docker](https://docs.docker.com/compose/install/)
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-**Run**
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-In root directory run ```docker-compose up```
+### `npm run eject`
 
-In ```/client``` run ```npm start```
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-**Intro**
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-[Intro video for developers on Youtube](https://youtu.be/6PHgnHJ5smQ)
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-**Update your forked repository**
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-If you are using github desktop, use [this procedure](https://stackoverflow.com/questions/46110615/how-to-sync-your-forked-repo-with-original-repo-in-github-desktop#:~:text=2%20Answers&text=To%20sync%20the%20master%20of,the%20'fetch%20origin'%20button.).
+## Learn More
 
-----
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-**Contributors**
-
-
-***UX/UI***
-
-Danielle Richter & Rotem Bonder - design the first simple onboarding and suggestions
+To learn React, check out the [React documentation](https://reactjs.org/).
