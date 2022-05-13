@@ -34,6 +34,10 @@ const Discussion: FC<DiscussionProps> = (props: DiscussionProps) => {
   try {
     return (
       <div className="chat">
+        <div className="guideline">
+          <p>Remember to keep the discussion respectful and to follow the <a href="https://">Community Guidelines</a></p>
+
+        </div>
         <div className="messages">
           {map(messages, (msg: any, i: number) => (
             <MessageComp key={`${i}-message`} msg={msg} />

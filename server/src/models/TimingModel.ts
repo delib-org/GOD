@@ -7,8 +7,8 @@ export const TimingSchema = new Schema({
   time: Date,
   title: String,
   id: String,
-  parentId:String, //questionId
-  parentType:'question'
+  parentId: String, //questionId
+  parentType: 'question',
 });
 
 const TimingModel = mongoose.model("Timing", TimingSchema);

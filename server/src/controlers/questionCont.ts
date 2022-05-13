@@ -1,6 +1,7 @@
 import Question from '../models/QuestionModel';
 import User from '../models/UserModel';
 import Solution from '../models/SuggestionModel';
+import { get } from 'lodash'
 
 const ObjectId = require('mongoose').Types.ObjectId;
 
@@ -8,9 +9,7 @@ export async function upsertQuestion(req: any, res: any) {
   try {
     // get question
     const question = req.body;
-
-    question.creatorId = req.user.id;
-    question.members = [req.user.id];
+    const creatorId = req.user.id
 
     if (question._id) {
       // update
@@ -18,6 +17,9 @@ export async function upsertQuestion(req: any, res: any) {
       res.send({ update: true, response });
     } else {
       // create new question
+      question.creatorId = creatorId;
+      question.members = [creatorId];
+      question.watchlist = { [creatorId]: true }
       const result = await Question.create(question);
       res.send(result);
     }
@@ -108,3 +110,29 @@ export const setSolutionLike = async (req: any, res: any) => {
     res.status(500).send({ error: error.message });
   }
 };
+
+export const toggleWatch = async (req: any, res: any) => {
+  try {
+    const { questionId } = req.body;
+    if (typeof questionId !== 'string') {
+      return res.send({ error: `Error updating question ${questionId}` });
+    }
+
+    const userId = req.user.id
+    const question = await Question.findById(new ObjectId(questionId))
+    const isWatching = get(question.watchlist, userId, false)
+
+    await Question.updateOne(
+      { _id: questionId },
+      {
+        $set: {
+          [`watchlist.${userId}`]: !isWatching,
+        },
+      },
+    );
+
+    res.send({ isWatching: !isWatching });
+  } catch (error: any) {
+    res.send({ error: error.message });
+  }
+}

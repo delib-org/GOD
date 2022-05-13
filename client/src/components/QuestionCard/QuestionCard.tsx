@@ -6,6 +6,7 @@ import HowToVoteIcon from '@mui/icons-material/HowToVote';
 import { useAppDispatch } from "redux/hooks";
 import PublishAlert from "popups/PublishAlert";
 import { publishQuestion } from "redux/reducers/questionsReducers";
+import { loadDraft } from 'redux/reducers/createQuestionReducer'
 
 export interface VoteCardProps {
   question: any
@@ -20,14 +21,21 @@ const VoteCard: FC<VoteCardProps> = (props: VoteCardProps) => {
 
   const [publishPopupOpen, setPublishPopupOpen] = React.useState(false);
 
+  const edit = () => {
+    dispatch(loadDraft(question))
+    history.push(`/create_question/1`)
+  }
+
+  const publish = () => dispatch(publishQuestion(questionId, () => setPublishPopupOpen(false)))
+
   function handleRedirect() {
     if (status !== 'draft') {
       history.push(`/question/${questionId}`);
     }
-    // todo - load question to newQuestion and redirect to /1
+    else {
+      edit()
+    }
   }
-
-  const publish = () => dispatch(publishQuestion(questionId, () => setPublishPopupOpen(false)))
 
   const imageUrl = image?.secure_url;
 
@@ -48,7 +56,6 @@ const VoteCard: FC<VoteCardProps> = (props: VoteCardProps) => {
               <i className="card__info__voteCount__icon">
                 <HowToVoteIcon style={{ margin: '0 auto' }} />
               </i>
-              {/* eslint-disable-next-line no-underscore-dangle */}
               <div>0</div>
             </div>
             <div className="card__info__share">Share</div>
@@ -56,7 +63,7 @@ const VoteCard: FC<VoteCardProps> = (props: VoteCardProps) => {
           </>
         ) : (
           <>
-            <div className="card__info__votes">Edit</div>
+            <div className="card__info__votes" onClick={edit}>Edit</div>
             <div className="card__info__share">Ask for Review</div>
             <div className="card__info__views" onClick={() => setPublishPopupOpen(true)}>Publish</div>
           </>

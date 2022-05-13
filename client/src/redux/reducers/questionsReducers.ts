@@ -90,9 +90,11 @@ export const { voteSolution } = questionsSlice.actions;
 
 // actions
 interface NewQuestionPayload {
-  title: string;
-  description: string;
-  image: any;
+  _id?: string,
+  title: string,
+  description: string,
+  image: any,
+  schedule: any,
   status?: string;
 }
 
@@ -144,20 +146,23 @@ export const likeSolution =
         vote,
       });
 
-      console.log("likeSolution", { data });
+    dispatch(questionsSlice.actions.likeSolution({
+      qid, sid, vote: data.resolvedVote, userId,
+    }));
+  } catch (error) {
+    console.error(error);
+  }
+};
 
-      dispatch(
-        questionsSlice.actions.likeSolution({
-          qid,
-          sid,
-          vote: data.resolvedVote,
-          userId,
-        })
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  };
+export const toggleWatch = (questionId: string, userId: string) => async (dispatch: any) => {
+  try {
+    const { data } = await axios.post('/questions/toggle-watch', { questionId, userId });
+
+    dispatch(questionsSlice.actions.toggleWatch({ questionId, userId }))
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 // selectors
 export const allQuestions = (state: RootState) => state.questions;

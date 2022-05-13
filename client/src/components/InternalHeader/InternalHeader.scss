@@ -1,10 +1,13 @@
+@import "style/vars";
+
 .internal-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: white;
-  padding: 20px;
+  padding: 0 20px;
   line-height: 1em;
+  height: 50px;
 
   & > * {
     width: 25%;
@@ -18,6 +21,24 @@
 
     &:nth-child(3) {
       text-align: right;
+
+      svg {
+        cursor: pointer;
+
+        &:not(:first-child) {
+          margin-left: 16px;
+        }
+
+        &.off {
+          opacity: .25;
+        }
+
+        &.on {
+          path {
+            fill: $light_blue;
+          }
+        }
+      }
     }
   }
 }

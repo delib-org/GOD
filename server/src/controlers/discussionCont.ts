@@ -1,7 +1,5 @@
 import { MessageModel } from "../models/DiscussionModel";
-import  UserModel  from "../models/UserModel";
-
-const mongoose = require("mongoose");
+import UserModel from "../models/UserModel";
 
 export async function getDiscussion(req: any, res: any): Promise<void> {
   try {
@@ -18,11 +16,9 @@ export async function getDiscussion(req: any, res: any): Promise<void> {
 }
 
 export async function addMessage(
-  msgObj: any
+  msgObj: any,
 ): Promise<any> {
   try {
-     
-      
     const user = await UserModel.findOne({ id: msgObj.creatorId });
 
     if (user) {
@@ -39,10 +35,8 @@ export async function addMessage(
       const message = new MessageModel(inMessage);
       const res = await message.save();
       return res;
-    }else {
-        throw new Error(`No user with id ${msgObj.parentId} was found in DB`)
     }
-    
+    throw new Error(`No user with id ${msgObj.parentId} was found in DB`)
   } catch (err) {
     console.error(err);
     return false;

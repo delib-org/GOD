@@ -14,17 +14,19 @@ import { Button } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ShareIcon from "@mui/icons-material/Share";
-
+import VisibilityIcon from "@mui/icons-material/Visibility";
 // controlers
 import { uid, getLastParamsFromURL } from "utils/helpers";
 import { sendMessage, joinRoom, leaveRoom } from "utils/socket";
 // redux
 import { addMessage, Message } from "redux/reducers/chatReducer";
-import { questionById } from "redux/reducers/questionsReducers";
+import { questionById, toggleWatch } from "redux/reducers/questionsReducers";
 import { User, userSelector } from "redux/reducers/userReducer";
 import { useAppSelector, useAppDispatch } from "redux/hooks";
-
 // components
+import InternalHeader from "components/InternalHeader";
+import _ from "lodash";
+import classNames from "classnames";
 import Discussion from "./Discussion";
 import QuestionInfo from "./Information";
 import Vote from "./Vote/Vote";
@@ -47,6 +49,7 @@ const Question: FC = () => {
 
   const dispatch = useAppDispatch();
   const question = useAppSelector(questionById(questionId));
+  const isWatching = _.get(question, ['watchlist', user.id], false)
 
   useEffect(() => {
     joinRoom(questionId, (messageObj: any) => {
@@ -98,17 +101,18 @@ const Question: FC = () => {
         // tempMessageId = msg.id;
       }
     }
+    ev.target.reset()
   };
 
   return (
     <div className="page page-question">
-      <div
-        className="question-header"
-        style={{ backgroundImage: imageUrl ? `url(${imageUrl}` : "none" }}>
-        <div className="share-button">
-          <ShareIcon />
-        </div>
-      </div>
+      <InternalHeader backUrl="/questions">
+        <ShareIcon />
+        <VisibilityIcon
+          onClick={() => dispatch(toggleWatch(questionId, user.id))}
+          className={classNames({ on: isWatching, off: !isWatching })} />
+      </InternalHeader>
+      <div className="question-header" style={{ backgroundImage: imageUrl ? `url(${imageUrl}` : "none" }} />
       <Tabs
         id="questions"
         isMenu
@@ -146,18 +150,18 @@ const Question: FC = () => {
             </button>
           </form>
         ) : null}
-        <div
-          className="bottom-nav"
-          style={{
-            boxShadow:
-              subLocation === "discussion" ? "none" : "0 12px 8px 10px grey",
-          }}>
-          <Link to="/questions" style={{ textDecoration: "none" }}>
-            <Button>
-              <ArrowBackIcon />
-            </Button>
-          </Link>
-        </div>
+        {/*<div*/}
+        {/*  className="bottom-nav"*/}
+        {/*  style={{*/}
+        {/*    boxShadow:*/}
+        {/*      subLocation === "discussion" ? "none" : "0 12px 8px 10px grey",*/}
+        {/*  }}>*/}
+        {/*  <Link to="/questions" style={{ textDecoration: "none" }}>*/}
+        {/*    <Button>*/}
+        {/*      <ArrowBackIcon />*/}
+        {/*    </Button>*/}
+        {/*  </Link>*/}
+        {/*</div>*/}
       </div>
     </div>
   );

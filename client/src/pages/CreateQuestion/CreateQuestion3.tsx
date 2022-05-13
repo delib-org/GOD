@@ -16,7 +16,7 @@ import CreateQuestionProps from './CreateQuestionProps';
 
 const CreateQuestion3: FC<CreateQuestionProps> = (props: CreateQuestionProps) => {
   const dispatch = useAppDispatch();
-  const { loader, image } = useAppSelector(newQuestionSelector);
+  const { imageUploading, image } = useAppSelector(newQuestionSelector);
   const { path } = props;
 
   const cld = new Cloudinary({
@@ -65,7 +65,7 @@ const CreateQuestion3: FC<CreateQuestionProps> = (props: CreateQuestionProps) =>
                 </label>
               </>
             )}
-          {loader
+          {imageUploading
             ? (
               <div className="uploadPanel__loader">
                 <Loader />

@@ -1,39 +1,24 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import TextField from '@mui/material/TextField';
 import { NextButton, BackButton } from "components/Wizard";
-import {
-  newQuestionSelector,
-  setDescription,
-  setEnableMoveTo3,
-} from 'redux/reducers/createQuestionReducer';
+import { isDescriptionSet, newQuestionSelector, setDescription } from 'redux/reducers/createQuestionReducer';
 import { useAppSelector, useAppDispatch } from 'redux/hooks';
 import CreateQuestionProps from './CreateQuestionProps';
 
 const CreateQuestion2: FC<CreateQuestionProps> = (props: CreateQuestionProps) => {
-  const { description, enableMoveTo3: enableNext } = useAppSelector(newQuestionSelector);
-  const dispatch = useAppDispatch();
   const { path } = props;
+  const { description } = useAppSelector(newQuestionSelector);
 
-  // state
-  const maxChar = 500;
-  const [charCount, setCharCount] = useState(description.length);
-  const [charClass, setCharClass] = useState('charCount--min');
+  const dispatch = useAppDispatch();
 
   function handleChange(ev: any) {
-    const charCountVar = ev.target.value.length;
-    setCharCount(ev.target.value.length);
-
-    if (charCountVar > 6 && charCountVar < maxChar) {
-      setCharClass('charCount--ok');
-      dispatch(setDescription(ev.target.value));
-      dispatch(setEnableMoveTo3(true));
-    } else if (charCountVar <= 6) {
-      setCharClass('charCount--min');
-      dispatch(setEnableMoveTo3(false));
-    } else {
-      ev.target.value = ev.target.value.slice(0, -1);
-    }
+    dispatch(setDescription(ev.target.value));
   }
+
+  const maxChar = 500;
+  const charCount = description.length;
+  const charClass = charCount > 6 && charCount < maxChar ? 'charCount--ok' : 'charCount--min'
+  const enableNext = isDescriptionSet(description)
 
   return (
     <div>

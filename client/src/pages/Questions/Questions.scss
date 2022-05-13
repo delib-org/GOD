@@ -2,6 +2,10 @@
 
 .page.page-questions {
 
+  .tabs {
+    flex-grow: 2;
+  }
+
   .page-content {
     padding: 0 25px 80px;
     flex-grow: 2;

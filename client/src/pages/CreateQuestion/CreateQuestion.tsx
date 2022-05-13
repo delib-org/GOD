@@ -23,12 +23,13 @@ const CreateQuestion: FC = () => {
   const newQuestion = useAppSelector(newQuestionSelector)
   const { path } = useRouteMatch();
   const { pathname } = useLocation()
+
   const wizardSteps = [
-    { routeName: '1', caption: 'Problem' },
-    { routeName: '2', caption: 'Goal' },
-    { routeName: '3', caption: 'Upload' },
-    { routeName: '4', caption: 'Schedule' },
-    { routeName: '5', caption: 'Review' },
+    { stepNumber: 1, caption: 'Problem' },
+    { stepNumber: 2, caption: 'Goal' },
+    { stepNumber: 3, caption: 'Upload' },
+    { stepNumber: 4, caption: 'Schedule' },
+    { stepNumber: 5, caption: 'Review' },
   ];
 
   const hasStarted = pathname !== '/create_question'

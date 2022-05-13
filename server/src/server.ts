@@ -2,7 +2,6 @@ const express = require("express");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const jwt = require("jwt-simple");
-const mongoose = require("mongoose");
 const path = require("path");
 require("dotenv").config();
 const app = express();
@@ -40,13 +39,13 @@ const passport = require("passport");
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(
-  session({ secret: PASSPORT_SECRET, resave: false, saveUninitialized: false })
+  session({ secret: PASSPORT_SECRET, resave: false, saveUninitialized: false }),
 );
 
 //pasport routes
 app.get(
   "/auth",
-  passport.authenticate("google", { scope: ["email", "profile"] })
+  passport.authenticate("google", { scope: ["email", "profile"] }),
 );
 
 app.get(
@@ -75,7 +74,7 @@ app.get(
       res.user = user;
       const userJWT = jwt.encode(
         { id: user.id, role: user.role, displayName: user.displayName },
-        JWT_SECRET
+        JWT_SECRET,
       );
       res.cookie("user", userJWT, {
         httpOnly: true,
@@ -86,7 +85,7 @@ app.get(
     } catch (err: any) {
       res.status(500).send(err.message);
     }
-  }
+  },
 );
 
 app.get("/logout", (req: any, res: any) => {
@@ -115,7 +114,7 @@ io.on("connection", (socket) => {
   // rooms
   socket.on("join-room", (roomId) => {
     socket.join(roomId); //the client is now in that room
-    
+
     socketRoom = roomId;
     console.log("join room", roomId, '--------------------------------------------');
   });
@@ -127,16 +126,14 @@ io.on("connection", (socket) => {
   });
 
   socket.on(`chat-message`, async (msgObj) => {
-
     const res = await addMessage(msgObj);
-   const socketRoom = msgObj.parentId;
-   
-    if (res && socketRoom){ 
-        io.to(socketRoom).emit("chat-message", res);}
+    const socketRoom = msgObj.parentId;
+
+    if (res && socketRoom){
+      io.to(socketRoom).emit("chat-message", res);}
   });
 });
 
 http.listen(port, () => {
   console.log("Server listen on port", port);
 });
-

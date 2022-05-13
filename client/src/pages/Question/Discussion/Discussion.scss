@@ -5,13 +5,28 @@
   flex-direction: column;
   height: 100%;
 
+  .guideline {
+    display: flex;
+    justify-content: center;
+    background-color: $light_gray;
+
+    p{
+      padding: 5px 15px;
+      margin: 0;
+    }
+    a{
+      color: black;
+      text-decoration: underline !important;
+    }
+  }
+
   .messages {
     flex-grow: 2;
 
     .message {
       border-bottom: solid 1px $light_gray;
       padding: 20px;
-
+      display: flex;
       .creator {
         color: $mid_gray;
         font-size: 0.725em;
