@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
-import { set, get, findIndex, values, keyBy } from "lodash";
+
+
 import { Solution } from "types";
 import { QuestionSchema } from "./createQuestionReducer";
 import type { RootState } from "../store";
